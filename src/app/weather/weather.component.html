@@ -1,1 +1,15 @@
-<p>weather works!</p>
+<form>
+    <label for="cityName">Ingresar nombre de la ciudad:</label>
+    <input type="text" name="cityName" id="cityName" placeholder="Enter city" [(ngModel)]="city">
+    <button type="button" (click)="getWeather()">Obtener clima</button>
+  </form>
+  
+  <div *ngIf="weatherData">
+    <p *ngIf="weatherData.name">Nombre: {{weatherData.name}}</p>
+    <p *ngIf="weatherData.main && weatherData.main.temp">Temperatura: {{weatherData.main.temp}}</p>
+    <p *ngIf="weatherData.main && weatherData.main.temp_min">Temperatura Mínima: {{weatherData.main.temp_min}}</p>
+    <p *ngIf="weatherData.main && weatherData.main.temp_max">Temperatura Máxima: {{weatherData.main.temp_max}}</p>
+  </div>
+
+
+  

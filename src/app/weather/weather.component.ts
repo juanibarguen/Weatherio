@@ -9,7 +9,7 @@ import { WeatherService } from '../service/weather.service';
 })
 export class WeatherComponent implements OnInit{
   city!:string;
-  weatherData: any[] = [];
+  weatherData: any = {};
 
   constructor( private apiService: WeatherService) {}
 
