@@ -5,9 +5,11 @@
 }
 .container {
     width: 100%;
+    max-width: 1300px;
     height: 100vh;
     background: #131214;
     padding: 20px;
+    margin: 0 auto;
 }
 
 .container-weather {
@@ -15,6 +17,7 @@
     /* height: 100vh; */
     display: flex;
     flex-direction: row;
+    column-gap: 2em;
 }
 
 /* NAVBAR */
@@ -85,10 +88,61 @@
     margin: 20px 0 10px auto;
 }
 
-.current-temp {
+
+/*   reset COLOR */
+ .current-temp {
     font-size: 70px;
     display: flex;
     align-items: center;
+}
+
+/*
+.current-temp {
+    background: #1F1E22;
+}
+
+
+.current-temp svg {
+    background: #1F1E22;
+}
+
+.data-day {
+    background-color: #1F1E22;
+}
+
+.data-day p, .data-city-title {
+    background-color: #1F1E22;
+}
+.data-day svg {
+    background-color: #1F1E22;
+}.data-location {
+    background-color: #1F1E22;
+}
+
+.data-location p {
+    background-color: #1F1E22;
+}
+
+.next-day {
+    background-color: #1F1E22;
+}
+
+.next-day-forecast {
+    background: #1F1E22;
+}
+.next-day-forecast svg,.data-location svg, .data-day svg {
+    background: #1F1E22;
+}
+
+.next-day-date > p, .next-day-name > p, .next-day-forecast > p, .data-location > p {
+    background: #1F1E22;
+} */
+
+
+
+
+.current-temp-title, .current-temp-description {
+    background: #1F1E22;
 }
 
 .current-temp-description {
@@ -148,4 +202,185 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+
+/* container-weather-right */
+
+.container-weather-right {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    
+}
+
+.container-current-weather {
+    display: flex;
+    flex-direction: row;
+    background: #1F1E22;
+    color: #fff;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.quality {
+    display: flex;
+    flex-direction: column;
+    background: #1C1B1F;
+    padding: 10px;
+}
+
+.quality-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.wind-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px ;
+}
+
+.wind-current  {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-left: 20px;
+    column-gap: 20px;
+}
+
+.highlights {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.quality-text {
+    align-items: center;
+}
+
+.quality-text p, .sunrise-and-sunset-title {
+    font-size: 12px;
+    color: #9b9b9b;
+}
+
+.quality button{
+    border: none;
+    padding: 2px 5px;
+    border-radius: 15px;
+}
+
+.more-data-highlights, .more-data-hourly-forecast {
+    display: flex;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        column-gap: 15px;
+}
+
+.sas-current {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.sunrise, .sunset {
+    display: flex;
+}
+
+
+.data-humidity, .data-pressure, .current-feels-like, .current-visibility{
+    display: flex;
+    padding-top: 30px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pressure-icon span, .humidity-icon span, .visibility-icon span, .feels-like span{
+    font-size: 40px;
+}
+
+
+.humidity-current, .presurre-current, .current-visibility, .current-feels-like {
+    font-size: 25px;
+}
+
+.visibility-container, .feels-like-container {
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.humidity, .pressure, .visibility, .feels-like {
+    background: #1C1B1F ;
+    padding: 20px;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.humidity p, .pressure p {
+    font-size: 13px;
+    color: #9b9b9b;
+}
+
+.sunrise-and-sunset {
+    margin-top: 45px;
+}
+.quality {
+    height: 180px;
+    justify-content: space-between;
+    /* margin: 10px; */
+    width: 435px;
+    border-radius: 20px;
+    padding: 20px;
+    background: #1C1B1F;
+}
+
+.sunrise-and-sunset {
+    height: 180px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    width: 435px;
+    border-radius: 20px;
+    padding: 20px;
+    background: #1C1B1F;
+}
+
+.wind-current div h3 {
+    font-size: 12px;
+}
+.wind-current-value {
+    font-size: 30px;
+}
+
+.wind-current div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wind-icon > span {
+    font-size: 60px;
+}
+
+/* #1C1B1F */
+
+.sunrise-icon span, .sunset-icon span {
+    font-size: 60px;
+}
+
+.sunrise-data-current, .sunset-data-current{
+    font-size: 30px;
+}
+
+.sunrise-and-sunset-title {
+
 }
