@@ -17,34 +17,26 @@ export class WeatherComponent implements OnInit{
   forecastDataHours: any[] = [];
   formattedDateEnUs:string | undefined;
   formattedDateEs:string | undefined;
-   datosContaminacionAire: any;
-   sunriseTime: string | undefined;
+  datosContaminacionAire: any;
+  sunriseTime: string | undefined;
   sunsetTime: string | undefined;
   description: string | undefined
   constructor( private apiService: WeatherService) {}
 
-
-
   ngOnInit(): void {
-
-
     // obtenemos la fecha actual en el formato indicado: 'Sunday 4, Jun'
     // EN
     this.formattedDateEnUs = format(this.currentDate, "EEEE d, MMM", { locale: enUS });
     // ES
     this.formattedDateEs = format(this.currentDate, "EEEE d, MMM", { locale: es });
-
-
   }
 
   getTimeFromUnix(unixTime: number): string {
     const date = new Date(unixTime * 1000);
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-    
     return `${hours}:${minutes}`;
   }
-
 
   getWeather() {
     this.apiService.currentWeather(this.city).subscribe(data => {
@@ -67,12 +59,8 @@ export class WeatherComponent implements OnInit{
         }
     });
     this.obtenerContaminacionAire(this.city);
-  
     this.city = ''; 
-
-    
   }
-  
 
   getForecast() {
     if (this.city) {
@@ -86,9 +74,7 @@ export class WeatherComponent implements OnInit{
     }
   }
 
- 
-  
-getForecastHours() {
+  getForecastHours() {
   if (this.city) {
     this.apiService.forecast(this.city).subscribe(data => {
       const currentDate = new Date(); // Obtiene la fecha y hora actual
@@ -102,47 +88,39 @@ getForecastHours() {
         const forecastDate = new Date(data.list[i].dt_txt); // Obtiene la fecha y hora del pronóstico
 
         // Verifica si la hora del pronóstico coincide con la hora calculada
-        if (forecastDate.getHours() === nextMultipleOfThree) {
-          const forecastHour = forecastDate.getHours().toString().padStart(2, '0'); // Obtiene la hora y ajusta el formato
-          const forecastTime = `${forecastHour}:00`; // Crea el formato HH:00 para la hora
-          this.forecastDataHours.push({
-            time: forecastTime,
-            main: data.list[i].weather[0].main,
-            temp: data.list[i].main.temp
-          });
-
-          count++;
-          const nextHour = nextMultipleOfThree + 3 * count; // Calcula la próxima hora múltiplo de 3 para el próximo pronóstico
-          nextMultipleOfThree = nextHour >= 24 ? nextHour - 24 : nextHour; // Ajusta la próxima hora si supera las 24 horas
-
-          // Verifica si se han obtenido exactamente 8 pronósticos
-          if (count >= 8) {
-            break;
-          }
+      if (forecastDate.getHours() === nextMultipleOfThree) {
+        const forecastHour = forecastDate.getHours().toString().padStart(2, '0'); // Obtiene la hora y ajusta el formato
+        const forecastTime = `${forecastHour}:00`; // Crea el formato HH:00 para la hora
+        this.forecastDataHours.push({
+          time: forecastTime,
+          main: data.list[i].weather[0].main,
+          temp: data.list[i].main.temp
+        });
+        count++;
+        const nextHour = nextMultipleOfThree + 3 * count; // Calcula la próxima hora múltiplo de 3 para el próximo pronóstico
+        nextMultipleOfThree = nextHour >= 24 ? nextHour - 24 : nextHour; // Ajusta la próxima hora si supera las 24 horas
+        // Verifica si se han obtenido exactamente 8 pronósticos
+        if (count >= 8) {
+          break;
         }
       }
-
-      console.log(this.forecastDataHours);
-    });
-  }
-}
-
-obtenerContaminacionAire(ciudad: string) {
-  this.apiService.airpollution(ciudad).subscribe(
-    (data: any) => {
-      this.datosContaminacionAire = data; // Asignar los datos a la variable
-      console.log(data);
-      
-    },
-    (error: any) => {
-      console.error(error);
     }
-  );
-}
-  
-  
-  
-  
+  console.log(this.forecastDataHours);});
+  }
+  }
+
+  obtenerContaminacionAire(ciudad: string) {
+    this.apiService.airpollution(ciudad).subscribe(
+      (data: any) => {
+        this.datosContaminacionAire = data; // Asignar los datos a la variable
+        console.log(data);
+      
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
 
   executeFunctions() {
     this.getForecastHours ()
@@ -169,19 +147,5 @@ obtenerContaminacionAire(ciudad: string) {
     var kilometers = meters / 1000;
     return kilometers;
   }
-  
-  // capitalizeFirstLetterOfEachWord(text: string): string {
-  //   const words = text.split(' ');
-  
-  //   const capitalizedWords = words.map(word => {
-  //     const firstLetter = word.charAt(0).toUpperCase();
-  //     const restOfWord = word.slice(1);
-  //     return firstLetter + restOfWord;
-  //   });
-  
-  //   return capitalizedWords.join(' ');
-  // }
-  
-  
 
 }
