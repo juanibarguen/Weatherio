@@ -21,6 +21,11 @@ export class WeatherComponent implements OnInit{
   sunriseTime: string | undefined;
   sunsetTime: string | undefined;
   description: string | undefined
+  indexValueN:number | undefined;
+  indexValue:string | undefined;
+  indexClass: string | undefined;
+
+
   constructor( private apiService: WeatherService) {}
 
   ngOnInit(): void {
@@ -49,16 +54,16 @@ export class WeatherComponent implements OnInit{
         this.weatherData.main.temp = Math.round(tempCelsius);
         // this.weatherData.main.tempFahrenheit = Math.floor(this.convertToFahrenheit(this.weatherData.main.temp)); 
       }
-      console.log(data);
+      // console.log(data);
   
         if (this.weatherData.sys && this.weatherData.sys.sunrise && this.weatherData.sys.sunset) {
           this.sunriseTime = this.getTimeFromUnix(this.weatherData.sys.sunrise);
           this.sunsetTime = this.getTimeFromUnix(this.weatherData.sys.sunset);
-          console.log('Sunrise:', this.sunriseTime);
-          console.log('Sunset:', this.sunsetTime);
+          // console.log('Sunrise:', this.sunriseTime);
+          // console.log('Sunset:', this.sunsetTime);
         }
     });
-    this.obtenerContaminacionAire(this.city);
+    this.getPollutionAir(this.city);
     this.city = ''; 
   }
 
@@ -69,7 +74,7 @@ export class WeatherComponent implements OnInit{
           main: item.weather[0].main,
           temp: item.main.temp
         }));
-        console.log(this.forecastData);
+        // console.log(this.forecastData);
       });
     }
   }
@@ -105,22 +110,28 @@ export class WeatherComponent implements OnInit{
         }
       }
     }
-  console.log(this.forecastDataHours);});
+  // console.log(this.forecastDataHours);
+    });
   }
   }
 
-  obtenerContaminacionAire(ciudad: string) {
+  getPollutionAir(ciudad: string) {
     this.apiService.airpollution(ciudad).subscribe(
       (data: any) => {
         this.datosContaminacionAire = data; // Asignar los datos a la variable
-        console.log(data);
-      
+        // console.log(data); // Acceder al valor de la propiedad "index"
+        // console.log(this.datosContaminacionAire.list[0].main.aqi);
+        this.indexAirPollution(this.datosContaminacionAire.list[0].main.aqi!);
+        console.log(this.datosContaminacionAire.list[0].main.aqi!);
+        
       },
       (error: any) => {
         console.error(error);
       }
     );
+    
   }
+  
 
   executeFunctions() {
     this.getForecastHours ()
@@ -148,4 +159,38 @@ export class WeatherComponent implements OnInit{
     return kilometers;
   }
 
+
+  indexAirPollution(value: number): void {
+    switch (value) {
+      case 1:
+        this.indexValue = "Good";
+        this.indexClass = "good";
+        console.log("Good");
+        break;
+      case 2:
+        this.indexValue = "Fair";
+        this.indexClass = "fair";
+        console.log("Fair");
+        break;
+      case 3:
+        this.indexValue = "Moderate";
+        this.indexClass = "moderate";
+        console.log("Moderate");
+        break;
+      case 4:
+        this.indexValue = "Poor";
+        this.indexClass = "poor";
+        console.log("Poor");
+        break;
+      case 5:
+        this.indexValue = "Very Poor";
+        this.indexClass = "very-poor";
+        console.log("Very Poor");
+        break;
+      default:
+        console.log("Default case");
+        break;
+    }
+  }
+  
 }
