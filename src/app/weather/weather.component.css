@@ -141,6 +141,7 @@
     background: #1F1E22;
     border-radius: 20px;
     padding: 10px;
+    font-size: 15px;
 }
 
 
@@ -174,6 +175,16 @@
     flex-direction: row;
     align-items: center;
     column-gap: 5px;
+    width: 55px;
+}
+
+.next-day-name {
+    width: 86px;
+}
+
+.next-day-date {
+    text-align: center;
+    width: 47px;
 }
 
 
