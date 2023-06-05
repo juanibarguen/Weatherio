@@ -5,7 +5,7 @@
 }
 
 .hourly-forecast {
-    padding-right: 20px;
+    padding: 20px 20px 0 0;
 }
 
 
@@ -167,7 +167,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 20px;
+    margin: 20px 10px;
 
 }
 .next-day-forecast{
@@ -180,11 +180,15 @@
 
 .next-day-name {
     width: 86px;
+    display: flex;
+    align-items: center;
 }
 
 .next-day-date {
-    text-align: center;
     width: 47px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -247,15 +251,37 @@
 
 .quality-text p, .sunrise-and-sunset-title {
     font-size: 12px;
-    color: #9b9b9b;
+    /* color: #9b9b9b; */
 }
 
-.quality button{
+.quality-tex-value {
     border: none;
     padding: 2px 5px;
     border-radius: 15px;
-    background: #93f993;
+    color: #000000;
 }
+
+.good {
+    background: #93f993;
+    /* color: #000000; */
+}
+
+.fair {
+    background: #ffe77d;
+}
+
+.moderate {
+    background: #d8fa4d;
+}
+
+.poor {
+    background: #8aff8a;
+}
+
+.very-poor {
+    background: #ff7f5b;
+}
+
 
 .more-data {
     display: flex;
@@ -305,7 +331,7 @@
 .quality {
     height: 180px;
     justify-content: space-between;
-    width: 435px;
+    width: 470px;
     border-radius: 20px;
     padding: 20px;
     background: #1C1B1F;
