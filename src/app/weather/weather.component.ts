@@ -13,6 +13,7 @@ export class WeatherComponent implements OnInit{
   city!:string;
   weatherData: any = {};
   forecastData: any[] = [];
+  forecastDataHours: any[] = [];
   formattedDateEnUs:string | undefined;
   formattedDateEs:string | undefined;
 
@@ -54,7 +55,88 @@ export class WeatherComponent implements OnInit{
     }
   }
 
+ 
+//  getForecastHours() {
+//     if (this.city) {
+//       this.apiService.forecast(this.city).subscribe(data => {
+//         const currentDate = new Date(); // Obtiene la fecha y hora actual
+//         const currentHour = currentDate.getHours(); // Obtiene la hora actual
+//         var nextMultipleOfThree = Math.ceil(currentHour / 3) * 3; // Calcula la próxima hora múltiplo de 3
+        
+//         let count = 0;
+//         for (let i = 0; i < data.list.length; i++) {
+//           const forecastDate = new Date(data.list[i].dt_txt); // Obtiene la fecha y hora del pronóstico
+          
+//           // Verifica si la hora del pronóstico coincide con la hora calculada
+//           if (forecastDate.getHours() === nextMultipleOfThree) {
+//             this.forecastDataHours.push({
+//               main: data.list[i].weather[0].main,
+//               temp: data.list[i].main.temp
+//             });
+            
+//             count++;
+//             const nextHour = nextMultipleOfThree + 3 * count; // Calcula la próxima hora múltiplo de 3 para el próximo pronóstico
+//             nextMultipleOfThree = nextHour >= 24 ? nextHour - 24 : nextHour; // Ajusta la próxima hora si supera las 24 horas
+            
+//             // Verifica si se han obtenido exactamente 8 pronósticos
+//             if (count >= 8) {
+//               break;
+//             }
+//           }
+//         }
+        
+//         console.log(this.forecastDataHours);
+//       });
+//     }
+//   }
+  
+getForecastHours() {
+  if (this.city) {
+    this.apiService.forecast(this.city).subscribe(data => {
+      const currentDate = new Date(); // Obtiene la fecha y hora actual
+      const currentHour = currentDate.getHours(); // Obtiene la hora actual
+      let nextMultipleOfThree = Math.ceil(currentHour / 3) * 3; // Calcula la próxima hora múltiplo de 3
+
+      let count = 0;
+      this.forecastDataHours = []; // Reinicia el array antes de llenarlo nuevamente
+
+      for (let i = 0; i < data.list.length; i++) {
+        const forecastDate = new Date(data.list[i].dt_txt); // Obtiene la fecha y hora del pronóstico
+
+        // Verifica si la hora del pronóstico coincide con la hora calculada
+        if (forecastDate.getHours() === nextMultipleOfThree) {
+          const forecastHour = forecastDate.getHours().toString().padStart(2, '0'); // Obtiene la hora y ajusta el formato
+          const forecastTime = `${forecastHour}:00`; // Crea el formato HH:00 para la hora
+          this.forecastDataHours.push({
+            time: forecastTime,
+            main: data.list[i].weather[0].main,
+            temp: data.list[i].main.temp
+          });
+
+          count++;
+          const nextHour = nextMultipleOfThree + 3 * count; // Calcula la próxima hora múltiplo de 3 para el próximo pronóstico
+          nextMultipleOfThree = nextHour >= 24 ? nextHour - 24 : nextHour; // Ajusta la próxima hora si supera las 24 horas
+
+          // Verifica si se han obtenido exactamente 8 pronósticos
+          if (count >= 8) {
+            break;
+          }
+        }
+      }
+
+      console.log(this.forecastDataHours);
+    });
+  }
+}
+
+
+  
+  
+  
+  
+
   executeFunctions() {
+    this.getForecastHours ()
     this.getForecast();
     this.getWeather();
   }
