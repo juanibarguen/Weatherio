@@ -14,13 +14,12 @@
     max-width: 1300px;
     height: 100vh;
     background: #131214;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     margin: 0 auto;
 }
 
 .container-weather {
     width: 100%;
-    /* height: 100vh; */
     display: flex;
     flex-direction: row;
     column-gap: 2em;
@@ -95,55 +94,19 @@
 }
 
 
-/*   reset COLOR */
  .current-temp {
     font-size: 70px;
     display: flex;
     align-items: center;
 }
 
-/*
-.current-temp {
-    background: #1F1E22;
-}
-
-
 .current-temp svg {
-    background: #1F1E22;
+    fill: #f2f2f2;
 }
 
-.data-day {
-    background-color: #1F1E22;
+.highlights-title {
+    padding: 10px ;
 }
-
-.data-day p, .data-city-title {
-    background-color: #1F1E22;
-}
-.data-day svg {
-    background-color: #1F1E22;
-}.data-location {
-    background-color: #1F1E22;
-}
-
-.data-location p {
-    background-color: #1F1E22;
-}
-
-.next-day {
-    background-color: #1F1E22;
-}
-
-.next-day-forecast {
-    background: #1F1E22;
-}
-.next-day-forecast svg,.data-location svg, .data-day svg {
-    background: #1F1E22;
-}
-
-.next-day-date > p, .next-day-name > p, .next-day-forecast > p, .data-location > p {
-    background: #1F1E22;
-} */
-
 
 
 
@@ -229,7 +192,6 @@
     flex-direction: row;
     background: #1F1E22;
     color: #fff;
-    /* width: 100%; */
     border-radius: 20px;
 }
 
@@ -281,6 +243,7 @@
     border: none;
     padding: 2px 5px;
     border-radius: 15px;
+    background: #93f993;
 }
 
 .more-data {
@@ -318,23 +281,11 @@
     font-size: 25px;
 }
 
-.visibility-container, .feels-like-container {
-    padding-top: 30px;
-    display: flex;
-    justify-content: space-between;
-}
-
-
 .box{
     background: #1C1B1F ;
     padding: 20px;
     width: 100%;
     border-radius: 20px;
-}
-
-.humidity p, .pressure p {
-    font-size: 13px;
-    color: #9b9b9b;
 }
 
 .sunrise-and-sunset {
@@ -343,7 +294,6 @@
 .quality {
     height: 180px;
     justify-content: space-between;
-    /* margin: 10px; */
     width: 435px;
     border-radius: 20px;
     padding: 20px;
@@ -394,21 +344,11 @@
     font-size: 30px;
 }
 
-.sunrise-and-sunset-title {
-
-}
-
-
-
-
-
 .forecast-today {
     display: flex;
-    /* background: #1F1E22; */
     justify-content: space-between;
     color: #fff;
 }
-
 
 .forecast-next-hour {
     background-color: #1F1E22;

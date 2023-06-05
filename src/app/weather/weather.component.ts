@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../service/weather.service';
-
+import { format } from 'date-fns';
+import { enUS, es } from 'date-fns/locale';
 
 @Component({
   selector: 'app-weather',
@@ -8,12 +9,20 @@ import { WeatherService } from '../service/weather.service';
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent implements OnInit{
+  currentDate: Date = new Date();
   city!:string;
   weatherData: any = {};
+  formattedDateEnUs:string | undefined;
+  formattedDateEs:string | undefined;
 
   constructor( private apiService: WeatherService) {}
 
   ngOnInit(): void {
+    // obtenemos la fecha actual en el formato indicado: 'Sunday 4, Jun'
+    this.formattedDateEnUs = format(this.currentDate, "EEEE d, MMM", { locale: enUS });
+    this.formattedDateEs = format(this.currentDate, "EEEE d, MMM", { locale: es });
+
+
   }
 
   convertToCelsius(tempKelvin: number): number {
@@ -35,7 +44,7 @@ export class WeatherComponent implements OnInit{
         // this.weatherData.main.tempFahrenheit = Math.floor(this.convertToFahrenheit(this.weatherData.main.temp)); 
       }
     });
-      
+    this.city = ''; 
   }
 
 }
