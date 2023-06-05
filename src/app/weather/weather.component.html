@@ -164,46 +164,12 @@
     
     <h3 class="today-title">Today at: </h3>
     <div class="forecast-today">
-        <div class="forecast-next-hour">
-            <p>9 PM</p>
+        <div class="forecast-next-hour" *ngFor="let forecastDataHour of forecastDataHours">
+            <p>{{forecastDataHour.time}}</p>
             <span class="material-symbols-outlined">rainy</span>
-            <p>5°C</p>
+            <p>{{convertToCelsius(forecastDataHour.temp)}}°C</p>
         </div>
-        <div class="forecast-next-hour">
-            <p>9 PM</p>
-            <span class="material-symbols-outlined">rainy</span>
-            <p>5°C</p>
-        </div>
-        <div class="forecast-next-hour">
-            <p>9 PM</p>
-            <span class="material-symbols-outlined">rainy</span>
-            <p>5°C</p>
-        </div>
-        <div class="forecast-next-hour">
-            <p>9 PM</p>
-            <span class="material-symbols-outlined">rainy</span>
-            <p>5°C</p>
-        </div>
-        <div class="forecast-next-hour">
-            <p>9 PM</p>
-            <span class="material-symbols-outlined">rainy</span>
-            <p>5°C</p>
-        </div>
-        <div class="forecast-next-hour">
-            <p>9 PM</p>
-            <span class="material-symbols-outlined">rainy</span>
-            <p>5°C</p>
-        </div>
-        <div class="forecast-next-hour">
-            <p>9 PM</p>
-            <span class="material-symbols-outlined">rainy</span>
-            <p>5°C</p>
-        </div>
-        <div class="forecast-next-hour">
-            <p>9 PM</p>
-            <span class="material-symbols-outlined">rainy</span>
-            <p>5°C</p>
-        </div>
+
     </div>
 </div>
 
