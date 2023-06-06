@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../service/weather.service';
 import { format } from 'date-fns';
 import { enUS, es } from 'date-fns/locale';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-weather',
@@ -10,6 +14,12 @@ import { enUS, es } from 'date-fns/locale';
 })
 export class WeatherComponent implements OnInit{
   currentDate: Date = new Date();
+
+  cityControl = new FormControl();
+  cities: string[] = ['London', 'New York', 'Paris', 'Tokyo', 'Berlin'];
+  filteredCities: string[] = [];
+  selectedCity: string | undefined;
+
   cityName:any
   city!:string;
   weatherData: any = {};
@@ -34,7 +44,11 @@ export class WeatherComponent implements OnInit{
     this.formattedDateEnUs = format(this.currentDate, "EEEE d, MMM", { locale: enUS });
     // ES
     this.formattedDateEs = format(this.currentDate, "EEEE d, MMM", { locale: es });
+    
+    
   }
+
+
 
   getTimeFromUnix(unixTime: number): string {
     const date = new Date(unixTime * 1000);
