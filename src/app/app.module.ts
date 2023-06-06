@@ -23,7 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     BrowserAnimationsModule,
     MatAutocompleteModule,
-    MatFormFieldModule,
+    MatFormFieldModule, 
     ReactiveFormsModule
   ],
   providers: [WeatherService],
