@@ -3,9 +3,11 @@ import { WeatherService } from '../service/weather.service';
 import { format } from 'date-fns';
 import { enUS, es } from 'date-fns/locale';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, debounceTime } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FormControl } from '@angular/forms';
+import { query } from '@angular/animations';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-weather',
@@ -15,8 +17,10 @@ import { FormControl } from '@angular/forms';
 export class WeatherComponent implements OnInit{
   currentDate: Date = new Date();
 
-  cityControl = new FormControl();
-  cities: string[] = ['London', 'New York', 'Paris', 'Tokyo', 'Berlin'];
+  control = new FormControl();
+
+
+  cities: any
   filteredCities: string[] = [];
   selectedCity: string | undefined;
 
@@ -34,9 +38,9 @@ export class WeatherComponent implements OnInit{
   indexValueN:number | undefined;
   indexValue:string | undefined;
   indexClass: string | undefined;
+  nombre: string | undefined;
 
-
-  constructor( private apiService: WeatherService) {}
+  constructor( private apiService: WeatherService, private http: HttpClient) {}
 
   ngOnInit(): void {
     // obtenemos la fecha actual en el formato indicado: 'Sunday 4, Jun'
@@ -44,9 +48,27 @@ export class WeatherComponent implements OnInit{
     this.formattedDateEnUs = format(this.currentDate, "EEEE d, MMM", { locale: enUS });
     // ES
     this.formattedDateEs = format(this.currentDate, "EEEE d, MMM", { locale: es });
-    
+    this.observerChangeSearch()
     
   }
+
+
+  observerChangeSearch() {
+    this.control.valueChanges
+    .pipe(
+      debounceTime(500)
+      )
+    .subscribe(queryy => {
+      this.nombre = queryy
+      console.log(this.nombre);
+      
+      this.apiService.geo(queryy).subscribe (result => {
+        console.log(result);
+        this.cities = result;
+      })
+    })
+  }
+
 
 
 
@@ -56,6 +78,11 @@ export class WeatherComponent implements OnInit{
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;
   }
+
+  // getGeo() {
+  //   this.apiService.geo(nombre).subscribe (result => {
+  //   })
+  // }
 
   getWeather() {
     this.apiService.currentWeather(this.city).subscribe(data => {

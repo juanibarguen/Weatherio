@@ -1,6 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
+import { __param } from 'tslib';
 
 @Injectable({
   providedIn: 'root'
@@ -25,18 +26,6 @@ export class WeatherService {
     return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey}`);
   }
 
-  // airpollution(city: string): Observable<any> {
-  //   return this.currentWeather(city).pipe(
-  //     switchMap((weatherData: any) => {
-  //       const lat = weatherData.coord.lat;
-  //       const lon = weatherData.coord.lon;
-  //       const start = /* valor del timestamp de inicio */;
-  //       const end = /* valor del timestamp de fin */;
-  //       return this.http.get(`http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lon}&start=${start}&end=${end}&appid=${this.apiKey}`);
-  //     })
-  //   );
-  // }
-
   airpollution(city: string): Observable<any> {
     return this.currentWeather(city).pipe(
       switchMap((weatherData: any) => {
@@ -48,6 +37,9 @@ export class WeatherService {
     );
   }
   
+      geo(query:string) {
+      return this.http.get(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey}`)
+    }
   
 
 }
