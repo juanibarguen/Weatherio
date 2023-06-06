@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener} from '@angular/core';
 import { WeatherService } from '../service/weather.service';
 import { format } from 'date-fns';
 import { enUS, es } from 'date-fns/locale';
-import { Observable } from 'rxjs';
-import { startWith, map, debounceTime } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { debounceTime } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import { query } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -15,16 +12,17 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent implements OnInit{
+
   currentDate: Date = new Date();
 
   control = new FormControl();
 
+  showCitiesList: boolean = false;
 
-  cities: any
-  filteredCities: string[] = [];
-  selectedCity: string | undefined;
+  cities: any[] = [];
+  @ViewChild('myListElement', { static: false }) myListElement!: ElementRef;
 
-  cityName:any
+  // cityName:any
   city!:string;
   weatherData: any = {};
   forecastData: any[] = [];
@@ -52,24 +50,39 @@ export class WeatherComponent implements OnInit{
     
   }
 
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.myListElement.nativeElement.contains(event.target)) {
+      this.showCitiesList = false;
+    }
+  }
 
   observerChangeSearch() {
     this.control.valueChanges
-    .pipe(
-      debounceTime(500)
-      )
-    .subscribe(queryy => {
-      this.nombre = queryy
-      console.log(this.nombre);
-      
-      this.apiService.geo(queryy).subscribe (result => {
-        console.log(result);
-        this.cities = result;
-      })
-    })
+      .pipe(debounceTime(500))
+      .subscribe(query => {
+        this.nombre = query;
+        console.log(this.nombre);
+  
+        if (query && query.trim().length > 0) {
+          this.apiService.geo(query).subscribe(result => {
+            if (Array.isArray(result)) {
+              this.cities = result;
+              this.showCitiesList = true;
+              //not result
+            } else {
+              this.cities = [];
+              this.showCitiesList = false;
+            }
+            
+          });
+        } else {
+          this.cities = [];
+          this.showCitiesList = false;
+        }
+      });
   }
-
-
+  
 
 
   getTimeFromUnix(unixTime: number): string {
@@ -78,11 +91,6 @@ export class WeatherComponent implements OnInit{
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;
   }
-
-  // getGeo() {
-  //   this.apiService.geo(nombre).subscribe (result => {
-  //   })
-  // }
 
   getWeather() {
     this.apiService.currentWeather(this.city).subscribe(data => {
