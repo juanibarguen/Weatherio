@@ -1,7 +1,6 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
-import { __param } from 'tslib';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +20,9 @@ export class WeatherService {
   currentWeather(city: string): Observable<any> {
     return this.http.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey}`);
   }
+  
+  currentWeatherForC(lat: string, lon:string): Observable<any> {
+    return this.http.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}`);  }
 
   forecast(city:string): Observable<any> {
     return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey}`);
@@ -37,7 +39,7 @@ export class WeatherService {
     );
   }
   
-      geo(query:string) {
+    geo(query:string) {
       return this.http.get(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey}`)
     }
   
