@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class WeatherComponent implements OnInit{
 
+  off = false
   currentDate: Date = new Date();
 
   control = new FormControl();

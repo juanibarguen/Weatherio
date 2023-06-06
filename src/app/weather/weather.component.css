@@ -492,6 +492,8 @@
     display: flex;
     justify-content: space-between;
     color: #fff;
+    overflow-x: auto;
+  white-space: nowrap;
 }
 
 .forecast-next-hour {
@@ -520,3 +522,46 @@
 
 
 
+
+
+/* 1320 primera */
+
+@media screen and (max-width: 1320px) {
+    .container-current-weather {
+      flex-direction: column;
+    }
+
+    .sunrise-and-sunset{
+        margin-top: 0px
+      }
+
+      .hourly-forecast {
+        padding: 2px 20px;
+    }
+
+    .quality {
+        width: auto;
+    }
+
+    .sas-current {
+        justify-content: space-evenly;
+    }
+
+    .sunrise-and-sunset {
+        width: auto;
+    }
+  }
+
+  @media screen and (max-width: 844px){
+  
+  .highlights {
+    padding: 20px 20px 0 20px;
+  }
+
+  }
+
+  @media screen and (max-width: 1000px){
+  .sas-current {
+    justify-content: space-between;
+}
+  }

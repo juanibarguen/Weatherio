@@ -186,7 +186,7 @@
         </div>
     
     <h3 class="today-title">Today at: </h3>
-    <div class="forecast-today">
+    <div class="forecast-today" *ngIf="off">
         <div class="forecast-next-hour" *ngFor="let forecastDataHour of forecastDataHours">
             <p>{{forecastDataHour.time}}</p>
             <span class="material-symbols-outlined">rainy</span>
