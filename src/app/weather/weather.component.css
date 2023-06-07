@@ -63,6 +63,7 @@ body {
     border: none;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+    color: #f2f2f2;
 }
 
 .input-search > input:focus {
@@ -494,4 +495,14 @@ body {
   .container-input-search {
     display: flex;
     z-index: 200;
+  }
+
+
+
+  /* pruebra */
+
+  .forecast-data-hours {
+    width: 100%;
+    height: 100px;background-color: #fedfdf;
+    padding: 10px;
   }
