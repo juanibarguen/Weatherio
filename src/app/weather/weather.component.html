@@ -1,20 +1,4 @@
-<!-- <section class="container">
-
-<div class="nav">
-    <div class="nav-logo">
-        <h1>Weatherio</h1>
-    </div>
-    <div class="nav-input-search-container">
-
-        <div class="nav-input-search">
-    
-        <div class="icon-search">
-        </div>
-        <div class="input-search">
-        <input [formControl]="control" type="text" name="cityName" id="cityName" placeholder="Search city.." [(ngModel)]="city" (keyup.enter)="executeFunctions()" autocomplete="off">
-    </div>
-        </div>
-
+<!-- 
         <ul #myListElement *ngIf="showCitiesList" class="list-container slide">
             <li *ngFor="let city of cities" class="item">
                 <div class="icon-location">
@@ -29,182 +13,7 @@
                 <p>Not results found</p>
               </li>
         </ul>
-
-    </div>
-
-    <div class="nav-current-location">
-        <button type="button"><span class="material-symbols-outlined">my_location</span><p>Current Location</p></button>
-    </div>
-</div>
-
-
-  <section class="container-weather">
-
-  <div class="container-weather-left">
-    <div class="data-city">
-        <p class="data-city-title">Now</p>
-        <div class="current-temp">
-            <p class="current-temp-title">{{weatherData?.main?.temp}}°C</p>
-        </div>
-        <p class="current-temp-description">{{description}}</p>
-        <div class="more-data-current">
-        <div class="data-day">
-            <span class="material-symbols-outlined">calendar_month</span> 
-            <p>{{ formattedDateEnUs }}</p>
-        </div>
-        <div class="data-location">
-            <span class="material-symbols-outlined">pin_drop</span> 
-            <p>{{weatherData.name}}, {{weatherData?.sys?.country}}</p>
-        </div>
-    </div>
-    </div>
-    <p class="five-days-forecast-title">5 Day Forecast</p>
-    <div class="five-days-forecast">
-        <div class="five-days-forecast-data">
-
-            <div class="next-day" *ngFor="let forecastItem of forecastData; let i = index;" >
-                <div class="next-day-forecast">
-                    <span class="material-symbols-outlined">cloud</span>
-                    <p>{{ (convertToCelsius(forecastItem.temp)) }}°C</p>
-                </div>
-
-                <div class="next-day-date">
-                    <p>{{ getNextDate(i) | date:'d MMM' }}</p>
-                </div>
-
-                <div class="next-day-name">
-                    <p>{{ getNextDate(i) | date:'EEEE' }}</p>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-  <div class="container-weather-right">
-
-    <div class="container-current-weather">
-        <div class="highlights">
-            <p class="highlights-title">Todays Highlights</p>
-            <div class="quality">
-               <div class="quality-text">
-                   <p>Air Quality Index</p>
-                   <p class="quality-tex-value" [ngClass]="indexClass">{{indexValue}}</p>
-               </div>
-                <div class="wind-data">
-                    <div class="wind-icon"><span class="material-symbols-outlined">
-                        air
-                        </span></div>
-                    <div class="wind-current" *ngIf="datosContaminacionAire">
-                        <div class="pm">
-                            <h3>PM25</h3>
-                            <p class="wind-current-value">{{ datosContaminacionAire.list[0].components.pm2_5 }}</p>
-                        </div>
-                        <div class="so">
-                            <h3>SO2</h3>
-                            <p class="wind-current-value">{{ datosContaminacionAire.list[0].components.so2 }}</p>
-                        </div>
-                        <div class="no">
-                            <h3>NO2</h3>
-                            <p class="wind-current-value">{{ datosContaminacionAire.list[0].components.no2 }}</p>
-                        </div>
-                        <div class="03">
-                            <h3>O 3</h3>
-                            <p class="wind-current-value"> {{ datosContaminacionAire.list[0].components.o3 }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="more-data">
-                <div class="box">
-                    <p>Humidity</p>
-                    <div class="data-box">
-                        <div class="box-icon"><span class="material-symbols-outlined">
-                            humidity_percentage
-                            </span></div>
-                        <div class="box-current">{{weatherData?.main?.humidity}}%</div>
-                    </div>
-                </div>
-                <div class="box">
-                    <p>Pressure</p>
-                    <div class="data-box">
-                        <div class="box-icon"><span class="material-symbols-outlined">
-                            water
-                            </span></div>
-                        <div class="box-current">{{weatherData?.main?.pressure}}hPa</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="hourly-forecast">
-            <div class="sunrise-and-sunset">
-                <p class="sunrise-and-sunset-title">Sunrise and sunset</p>
-                <div class="sas-current">
-                    <div class="sunrise">
-                        <div class="sunrise-icon"><span class="material-symbols-outlined">
-                            light_mode
-                            </span></div>
-                        <div class="sunrise-data">
-                            <p class="sunrise-data-title">Sunrise</p>
-                            <p class="sunrise-data-current">{{ sunriseTime }} AM</p>
-                        </div>
-                    </div>
-                    <div class="sunset">
-                        <div class="sunset-icon"><span class="material-symbols-outlined">
-                            dark_mode
-                            </span></div>
-                        <div class="sunset-data">
-                            <p class="sunset-data-title">Sunset</p>
-                            <p class="sunset-data-current">{{sunsetTime}} PM</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="more-data forecast">
-                <div class="box">
-                    <p>Visibility</p>
-                    <div class="data-box">
-                        <div class="box-icon"><span class="material-symbols-outlined">
-                            visibility
-                            </span></div>
-                        <div class="box-current">{{metersToKilometers(weatherData.visibility)}}km</div>
-                    </div>
-                </div>
-                <div class="box">
-                    <p>Feels Like</p>
-                    <div class="data-box">
-                        <div class="box-icon"><span class="material-symbols-outlined">
-                            thermostat
-                            </span></div>
-                        <div class="box-current">{{convertToCelsius(weatherData?.main?.feels_like)}}°c</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    
-    <h3 class="today-title">Today at: </h3>
-    <div class="forecast-today">
-        <div class="forecast-next-hour" *ngFor="let forecastDataHour of forecastDataHours">
-            <p>{{forecastDataHour.time}}</p>
-            <span class="material-symbols-outlined">rainy</span>
-            <p>{{convertToCelsius(forecastDataHour.temp)}}°C</p>
-        </div>
-
-    </div>
-</div>
-
- </section>
-</section>
-
-   
- -->
-
-
-
+  -->
 
  <nav class="navbar">
 
@@ -215,13 +24,33 @@
     <div class="nav-actions">
     
     <div class="nav-search">
-        <div class="icon-search">
-            <span class="material-symbols-outlined">search</span>            
-        </div>
 
-        <div class="input-search">
-            <input  type="text" placeholder="Search city..">
+        <div class="container-input-search">
+            <div class="icon-search">
+            <span class="material-symbols-outlined">search</span>            
+            </div>
+
+            <div class="input-search">
+            <input [formControl]="control" type="text" name="cityName" id="cityName" placeholder="Search city.." [(ngModel)]="city" (keyup.enter)="executeFunctions()" autocomplete="off">
+                
+            </div>
         </div>
+        <ul #myListElement *ngIf="showCitiesList" class="list-container slide">
+
+            <li *ngFor="let city of cities" class="item">
+               <div class="icon-location">
+                 <span class="material-symbols-outlined">location_on</span>
+             </div>
+             <div class="data-location-search">
+                   <p class="search-city">{{ city.name }}</p>
+                   <p class="search-location">{{city.state}}, {{ city.country }}</p>
+             </div>
+            </li> 
+                
+            <li class="not-result" *ngIf="cities.length === 0">
+              <p>Not results found</p>
+            </li>
+        </ul>
     </div>
 
     <div class="nav-current-location">
@@ -238,20 +67,20 @@
         <div class="data-city">
             <p class="data-city-title">Now</p>
             <div class="current-temp">
-                <p class="current-temp-title">6°C</p>
+                <p class="current-temp-title">{{weatherData?.main?.temp}}°C</p>
                 <span class="material-symbols-outlined">rainy</span>
             </div>
             
-            <p class="current-temp-description">Overcast Cloud</p>
+            <p class="current-temp-description">{{description}}</p>
             <div class="more-data-current">
-            <div class="data-day">
-                <span class="material-symbols-outlined">calendar_month</span> 
-                <p>6 Jun Saturday</p>
-            </div>
-            <div class="data-location">
-                <span class="material-symbols-outlined">pin_drop</span> 
-                <p>Rosario, AR</p>
-            </div>
+                <div class="data-day">
+                    <span class="material-symbols-outlined">calendar_month</span> 
+                    <p>{{ formattedDateEnUs }}</p>
+                </div>
+                <div class="data-location">
+                    <span class="material-symbols-outlined">pin_drop</span> 
+                    <p>{{weatherData.name}}, {{weatherData?.sys?.country}}</p>
+                </div>
         </div>
         </div>
 
@@ -259,79 +88,19 @@
 
         <div class="five-days-forecast">
             <div class="five-days-forecast-data">
-    
-                <div class="next-day">
-                    <div class="next-day-forecast">
-                        <span class="material-symbols-outlined">cloud</span>
-                        <p>10°C</p>
-                    </div>
-    
-                    <div class="next-day-date">
-                        <p>6 Jun </p>
-                    </div>
-    
-                    <div class="next-day-name">
-                        <p>Saturday</p>
-                    </div>
-                </div>
 
-                <div class="next-day">
+                <div class="next-day" *ngFor="let forecastItem of forecastData; let i = index;" >
                     <div class="next-day-forecast">
                         <span class="material-symbols-outlined">cloud</span>
-                        <p>10°C</p>
+                        <p>{{ (convertToCelsius(forecastItem.temp)) }}°C</p>
                     </div>
     
                     <div class="next-day-date">
-                        <p>6 Jun </p>
+                        <p>{{ getNextDate(i) | date:'d MMM' }}</p>
                     </div>
     
                     <div class="next-day-name">
-                        <p>Saturday</p>
-                    </div>
-                </div>
-
-                <div class="next-day">
-                    <div class="next-day-forecast">
-                        <span class="material-symbols-outlined">cloud</span>
-                        <p>10°C</p>
-                    </div>
-    
-                    <div class="next-day-date">
-                        <p>6 Jun </p>
-                    </div>
-    
-                    <div class="next-day-name">
-                        <p>Saturday</p>
-                    </div>
-                </div>
-
-                <div class="next-day">
-                    <div class="next-day-forecast">
-                        <span class="material-symbols-outlined">cloud</span>
-                        <p>10°C</p>
-                    </div>
-    
-                    <div class="next-day-date">
-                        <p>6 Jun </p>
-                    </div>
-    
-                    <div class="next-day-name">
-                        <p>Saturday</p>
-                    </div>
-                </div>
-
-                <div class="next-day">
-                    <div class="next-day-forecast">
-                        <span class="material-symbols-outlined">cloud</span>
-                        <p>10°C</p>
-                    </div>
-    
-                    <div class="next-day-date">
-                        <p>6 Jun </p>
-                    </div>
-    
-                    <div class="next-day-name">
-                        <p>Saturday</p>
+                        <p>{{ getNextDate(i) | date:'EEEE' }}</p>
                     </div>
                 </div>
     
@@ -350,29 +119,29 @@
             <div class="quality">
                <div class="quality-text">
                    <p>Air Quality Index</p>
-                   <p class="quality-tex-value">Good</p>
+                   <p class="quality-tex-value" [ngClass]="indexClass">{{indexValue}}</p>
                </div>
                 <div class="wind-data">
                     <div class="wind-icon"><span class="material-symbols-outlined">air</span>
                 </div>
-                    <div class="wind-current">
-                        <div class="pm">
-                            <h3>PM25</h3>
-                            <p class="wind-current-value">10.99</p>
-                        </div>
-                        <div class="so">
-                            <h3>SO2</h3>
-                            <p class="wind-current-value">10.99</p>
-                        </div>
-                        <div class="no">
-                            <h3>NO2</h3>
-                            <p class="wind-current-value">10.99</p>
-                        </div>
-                        <div class="03">
-                            <h3>O 3</h3>
-                            <p class="wind-current-value">10.99</p>
-                        </div>
+                <div class="wind-current" *ngIf="datosContaminacionAire">
+                    <div class="pm">
+                        <h3>PM25</h3>
+                        <p class="wind-current-value">{{ datosContaminacionAire.list[0].components.pm2_5 }}</p>
                     </div>
+                    <div class="so">
+                        <h3>SO2</h3>
+                        <p class="wind-current-value">{{ datosContaminacionAire.list[0].components.so2 }}</p>
+                    </div>
+                    <div class="no">
+                        <h3>NO2</h3>
+                        <p class="wind-current-value">{{ datosContaminacionAire.list[0].components.no2 }}</p>
+                    </div>
+                    <div class="03">
+                        <h3>O 3</h3>
+                        <p class="wind-current-value"> {{ datosContaminacionAire.list[0].components.o3 }}</p>
+                    </div>
+                </div>
                 </div>
             </div>
             </div>
@@ -410,7 +179,7 @@
                         <div class="box-icon"><span class="material-symbols-outlined">
                             humidity_percentage
                             </span></div>
-                        <div class="box-current">56%</div>
+                        <div class="box-current">{{weatherData?.main?.humidity}}%</div>
                     </div>
                 </div>
                 <div class="box-pressure small-box">
@@ -419,7 +188,7 @@
                         <div class="box-icon"><span class="material-symbols-outlined">
                             water
                             </span></div>
-                        <div class="box-current">1089hPa</div>
+                        <div class="box-current">{{weatherData?.main?.pressure}}hPa</div>
                     </div>
                 </div>
             </div>
@@ -453,55 +222,13 @@
     
    <div class="row">
       
-        <div class="carousel" id="carrousel" #carrousel>
+        <div class="carousel" id="carrousel">
           <div class="card-container">
 
-            <div class="card">
-                <p>04:00</p>
+            <div class="card" *ngFor="let forecastDataHour of forecastDataHours">
+                <p>{{forecastDataHour.time}}</p>
                 <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>04:00</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>04:00</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>04:00</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>04:00</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>04:00</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>04:00</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>04:00</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
+                <p>{{convertToCelsius(forecastDataHour.temp)}}°C</p>
             </div>
 
 
