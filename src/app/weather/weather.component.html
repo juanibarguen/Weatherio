@@ -24,13 +24,33 @@
     <div class="nav-actions">
     
     <div class="nav-search">
-        <div class="icon-search">
-            <span class="material-symbols-outlined">search</span>            
-        </div>
 
-        <div class="input-search">
+        <div class="container-input-search">
+            <div class="icon-search">
+            <span class="material-symbols-outlined">search</span>            
+            </div>
+
+            <div class="input-search">
             <input [formControl]="control" type="text" name="cityName" id="cityName" placeholder="Search city.." [(ngModel)]="city" (keyup.enter)="executeFunctions()" autocomplete="off">
+                
+            </div>
         </div>
+        <ul #myListElement *ngIf="showCitiesList" class="list-container slide">
+
+            <li *ngFor="let city of cities" class="item">
+               <div class="icon-location">
+                 <span class="material-symbols-outlined">location_on</span>
+             </div>
+             <div class="data-location-search">
+                   <p class="search-city">{{ city.name }}</p>
+                   <p class="search-location">{{city.state}}, {{ city.country }}</p>
+             </div>
+            </li> 
+                
+            <li class="not-result" *ngIf="cities.length === 0">
+              <p>Not results found</p>
+            </li>
+        </ul>
     </div>
 
     <div class="nav-current-location">

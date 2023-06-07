@@ -30,7 +30,8 @@ body {
 
 .nav-search {
     display: flex;
-
+    flex-direction: column;
+    position: relative;
 }
 
 .icon-search span {
@@ -130,6 +131,86 @@ body {
     }
 }
 
+
+
+@keyframes slideIn {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  .slide {
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .active {
+    display: block;
+    transform: translateY(0);
+  }
+  
+  .hidden {
+    padding: 0;
+    background: none;
+    display: none;
+    transform: translateY(-100%);
+  }
+  
+  .not-result {
+    padding: 30px;
+}
+.not-result > p {
+    text-align: center;
+}
+.list-container {
+    top: 18px;
+    position: absolute;
+    width: 100%;
+    background: #1F1E22;
+    padding-top: 22px;
+    padding-bottom: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.item {
+    background: #1F1E22;
+    display: flex;
+    cursor: pointer;
+}
+
+.item:hover {
+    background: #090909;
+
+}
+
+.icon-location {
+    padding: 10px
+}
+
+.icon-location > span {
+    font-size: 20px;
+}
+
+
+.data-location-search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.seach-city {
+    font-size: 20px;
+    letter-spacing: .5px;
+}
+.search-location {
+    color: lightgray;
+    font-size: 14px;
+}
 
 /* DATA CITY */
 
@@ -410,4 +491,7 @@ body {
     white-space: normal;
 }
 
-  
+  .container-input-search {
+    display: flex;
+    z-index: 200;
+  }
