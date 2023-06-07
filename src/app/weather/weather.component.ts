@@ -18,7 +18,7 @@ export class WeatherComponent implements OnInit{
 
   control = new FormControl();
 
-  showCitiesList: boolean = false;
+  showCitiesList: boolean = true;
 
   cities: any[] = [];
   @ViewChild('myListElement', { static: false }) myListElement!: ElementRef;

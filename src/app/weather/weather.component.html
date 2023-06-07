@@ -1,4 +1,4 @@
-<section class="container">
+<!-- <section class="container">
 
 <div class="nav">
     <div class="nav-logo">
@@ -9,7 +9,6 @@
         <div class="nav-input-search">
     
         <div class="icon-search">
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
         </div>
         <div class="input-search">
         <input [formControl]="control" type="text" name="cityName" id="cityName" placeholder="Search city.." [(ngModel)]="city" (keyup.enter)="executeFunctions()" autocomplete="off">
@@ -48,6 +47,7 @@
             <p class="current-temp-title">{{weatherData?.main?.temp}}°C</p>
         </div>
         <p class="current-temp-description">{{description}}</p>
+        <div class="more-data-current">
         <div class="data-day">
             <span class="material-symbols-outlined">calendar_month</span> 
             <p>{{ formattedDateEnUs }}</p>
@@ -56,6 +56,7 @@
             <span class="material-symbols-outlined">pin_drop</span> 
             <p>{{weatherData.name}}, {{weatherData?.sys?.country}}</p>
         </div>
+    </div>
     </div>
     <p class="five-days-forecast-title">5 Day Forecast</p>
     <div class="five-days-forecast">
@@ -186,7 +187,7 @@
         </div>
     
     <h3 class="today-title">Today at: </h3>
-    <div class="forecast-today" *ngIf="off">
+    <div class="forecast-today">
         <div class="forecast-next-hour" *ngFor="let forecastDataHour of forecastDataHours">
             <p>{{forecastDataHour.time}}</p>
             <span class="material-symbols-outlined">rainy</span>
@@ -199,16 +200,317 @@
  </section>
 </section>
 
-<!-- <form>
-    <label for="cityName">Ingresar nombre de la ciudad:</label>
-    <input type="text" name="cityName" id="cityName" placeholder="Enter city" [(ngModel)]="city">
-    <button type="button" (click)="getWeather()">Obtener clima</button>
-  </form>
-  
-  <div *ngIf="weatherData">
-    <p *ngIf="weatherData.name">Nombre: {{weatherData.name}}</p>
-    <p *ngIf="weatherData.main && weatherData.main.temp">Temperatura: {{weatherData.main.temp}}</p>
-    <p *ngIf="weatherData.main && weatherData.main.temp_min">Temperatura Mínima: {{weatherData.main.temp_min}}</p>
-    <p *ngIf="weatherData.main && weatherData.main.temp_max">Temperatura Máxima: {{weatherData.main.temp_max}}</p>
-  </div> -->    
+   
+ -->
 
+
+
+
+ <nav class="navbar">
+
+    <div class="nav-logo">
+        <h1>Weatherio</h1>
+    </div>
+
+    <div class="nav-actions">
+    
+    <div class="nav-search">
+        <div class="icon-search">
+            <span class="material-symbols-outlined">search</span>            
+        </div>
+
+        <div class="input-search">
+            <input  type="text" placeholder="Search city..">
+        </div>
+    </div>
+
+    <div class="nav-current-location">
+        <span class="material-symbols-outlined">my_location</span>
+        <p>Current Location</p>
+    </div>
+
+    </div>
+</nav>
+
+<section class="container-weather">
+
+    <div class="container-weather-left">
+        <div class="data-city">
+            <p class="data-city-title">Now</p>
+            <div class="current-temp">
+                <p class="current-temp-title">6°C</p>
+                <span class="material-symbols-outlined">rainy</span>
+            </div>
+            
+            <p class="current-temp-description">Overcast Cloud</p>
+            <div class="more-data-current">
+            <div class="data-day">
+                <span class="material-symbols-outlined">calendar_month</span> 
+                <p>6 Jun Saturday</p>
+            </div>
+            <div class="data-location">
+                <span class="material-symbols-outlined">pin_drop</span> 
+                <p>Rosario, AR</p>
+            </div>
+        </div>
+        </div>
+
+        <p class="five-days-forecast-title">5 Day Forecast</p>
+
+        <div class="five-days-forecast">
+            <div class="five-days-forecast-data">
+    
+                <div class="next-day">
+                    <div class="next-day-forecast">
+                        <span class="material-symbols-outlined">cloud</span>
+                        <p>10°C</p>
+                    </div>
+    
+                    <div class="next-day-date">
+                        <p>6 Jun </p>
+                    </div>
+    
+                    <div class="next-day-name">
+                        <p>Saturday</p>
+                    </div>
+                </div>
+
+                <div class="next-day">
+                    <div class="next-day-forecast">
+                        <span class="material-symbols-outlined">cloud</span>
+                        <p>10°C</p>
+                    </div>
+    
+                    <div class="next-day-date">
+                        <p>6 Jun </p>
+                    </div>
+    
+                    <div class="next-day-name">
+                        <p>Saturday</p>
+                    </div>
+                </div>
+
+                <div class="next-day">
+                    <div class="next-day-forecast">
+                        <span class="material-symbols-outlined">cloud</span>
+                        <p>10°C</p>
+                    </div>
+    
+                    <div class="next-day-date">
+                        <p>6 Jun </p>
+                    </div>
+    
+                    <div class="next-day-name">
+                        <p>Saturday</p>
+                    </div>
+                </div>
+
+                <div class="next-day">
+                    <div class="next-day-forecast">
+                        <span class="material-symbols-outlined">cloud</span>
+                        <p>10°C</p>
+                    </div>
+    
+                    <div class="next-day-date">
+                        <p>6 Jun </p>
+                    </div>
+    
+                    <div class="next-day-name">
+                        <p>Saturday</p>
+                    </div>
+                </div>
+
+                <div class="next-day">
+                    <div class="next-day-forecast">
+                        <span class="material-symbols-outlined">cloud</span>
+                        <p>10°C</p>
+                    </div>
+    
+                    <div class="next-day-date">
+                        <p>6 Jun </p>
+                    </div>
+    
+                    <div class="next-day-name">
+                        <p>Saturday</p>
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
+    
+    <div class="container-weather-right">
+        <div class="container-weather-right-content">
+            <p class="highlights-title">Todays Highlights</p>
+
+            <div class="container-boxes boxes">
+
+            <div class="highlights box">
+            <div class="quality">
+               <div class="quality-text">
+                   <p>Air Quality Index</p>
+                   <p class="quality-tex-value">Good</p>
+               </div>
+                <div class="wind-data">
+                    <div class="wind-icon"><span class="material-symbols-outlined">air</span>
+                </div>
+                    <div class="wind-current">
+                        <div class="pm">
+                            <h3>PM25</h3>
+                            <p class="wind-current-value">10.99</p>
+                        </div>
+                        <div class="so">
+                            <h3>SO2</h3>
+                            <p class="wind-current-value">10.99</p>
+                        </div>
+                        <div class="no">
+                            <h3>NO2</h3>
+                            <p class="wind-current-value">10.99</p>
+                        </div>
+                        <div class="03">
+                            <h3>O 3</h3>
+                            <p class="wind-current-value">10.99</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        <div class="sunrise-and-sunset box">
+            <p class="sunrise-and-sunset-title">Sunrise and sunset</p>
+            <div class="sas-current">
+                <div class="sunrise">
+                    <div class="sunrise-icon"><span class="material-symbols-outlined">light_mode</span>
+                </div>
+                    <div class="sunrise-data">
+                        <p class="sunrise-data-title">Sunrise</p>
+                        <p class="sunrise-data-current">05:34 AM</p>
+                    </div>
+                </div>
+                <div class="sunset">
+                    <div class="sunset-icon">
+                        <span class="material-symbols-outlined">dark_mode</span>
+                    </div>
+                    <div class="sunset-data">
+                        <p class="sunset-data-title">Sunset</p>
+                        <p class="sunset-data-current">8:34 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+
+            <div class="small-boxes">
+
+            <div class="small-boxes1">
+                <div class="box-humidity small-box">
+                    <p>Humidity</p>
+                    <div class="data-box">
+                        <div class="box-icon"><span class="material-symbols-outlined">
+                            humidity_percentage
+                            </span></div>
+                        <div class="box-current">56%</div>
+                    </div>
+                </div>
+                <div class="box-pressure small-box">
+                    <p>Pressure</p>
+                    <div class="data-box">
+                        <div class="box-icon"><span class="material-symbols-outlined">
+                            water
+                            </span></div>
+                        <div class="box-current">1089hPa</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="small-boxes2">
+                <div class="box-visibility small-box">
+                    <p>Visibility</p>
+                    <div class="data-box">
+                        <div class="box-icon"><span class="material-symbols-outlined">
+                            visibility
+                            </span></div>
+                        <div class="box-current">10km</div>
+                    </div>
+                </div>
+                <div class="box-feels-like small-box">
+                    <p>Feels Like</p>
+                    <div class="data-box">
+                        <div class="box-icon"><span class="material-symbols-outlined">
+                            thermostat
+                            </span></div>
+                        <div class="box-current">30°c</div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </div>
+
+    <h3 class="today-title">Today at: </h3>
+
+    
+   <div class="row">
+      
+        <div class="carousel" id="carrousel" #carrousel>
+          <div class="card-container">
+
+            <div class="card">
+                <p>04:00</p>
+                <span class="material-symbols-outlined">rainy</span>
+                <p>10°C</p>
+            </div>
+
+            <div class="card">
+                <p>04:00</p>
+                <span class="material-symbols-outlined">rainy</span>
+                <p>10°C</p>
+            </div>
+
+            <div class="card">
+                <p>04:00</p>
+                <span class="material-symbols-outlined">rainy</span>
+                <p>10°C</p>
+            </div>
+
+            <div class="card">
+                <p>04:00</p>
+                <span class="material-symbols-outlined">rainy</span>
+                <p>10°C</p>
+            </div>
+
+            <div class="card">
+                <p>04:00</p>
+                <span class="material-symbols-outlined">rainy</span>
+                <p>10°C</p>
+            </div>
+
+            <div class="card">
+                <p>04:00</p>
+                <span class="material-symbols-outlined">rainy</span>
+                <p>10°C</p>
+            </div>
+
+            <div class="card">
+                <p>04:00</p>
+                <span class="material-symbols-outlined">rainy</span>
+                <p>10°C</p>
+            </div>
+
+            <div class="card">
+                <p>04:00</p>
+                <span class="material-symbols-outlined">rainy</span>
+                <p>10°C</p>
+            </div>
+
+
+          </div>
+        </div>
+      
+      </div>
+        </div>
+</section>
+
+
+ 
