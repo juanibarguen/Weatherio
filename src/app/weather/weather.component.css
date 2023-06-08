@@ -304,6 +304,10 @@ body {
     background-color: #1C1B1F;
 }
 
+.box-current {
+    font-size: 25px;
+}
+
 /* Air Quality Index */
 
 .quality-text {
@@ -347,8 +351,11 @@ body {
     display: flex;
     justify-content: space-between;
     font-size: 30px;
+    align-items: center;
 }
-
+.box-icon {
+    display: flex;
+}
 .data-box div span {
     font-size: 40px;
 }
@@ -435,12 +442,79 @@ body {
         font-size: 50px;
     }
 
+    .box-current {
+        font-size: 20px;
+    }
+    .data-box div span {
+        font-size: 32px;
+    }
+
     
 }
 
+@media screen and (max-width: 950px) {
+
+    .wind-icon span,.sunrise-icon span, .sunset-icon span {
+        font-size: 50px;
+        padding: 5px;
+    }
+    
+    .wind-current div h3, .sunset-data-title, .sunrise-data-title {
+        font-size: 16px;
+        color: #959595;
+        text-align: center;
+    }
+    
 
 
-@media screen and (max-width: 875px) {
+
+    .data-city, .five-days-forecast {
+        width: 230px;
+    }
+
+    .small-box {
+        padding: 15px;
+        height: 120px;
+
+    }
+    .container-boxes {
+        display: flex;
+        
+        flex-direction: column;
+    }
+
+    .box {
+        width: 100%;
+    }
+
+    .boxes {
+        row-gap: 10px;
+    }
+    
+    .container-weather-right {
+        height: 580px;
+        overflow-y: auto;
+    }
+
+
+}
+
+@media screen and (max-width: 930px) {
+
+    .sunrise-data,.sunset-data{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .box-current {
+        font-size: 25px;
+    }
+    .data-box div span {
+        font-size: 40px;
+    }
+
     .small-boxes {
         flex-direction: column;
     }
@@ -464,6 +538,25 @@ body {
 }
 
 @media screen and (max-width: 685px) {
+
+    .wind-icon span,.sunrise-icon span, .sunset-icon span {
+        font-size: 30px;
+    }
+    
+    .wind-current div h3, .sunset-data-title, .sunrise-data-title {
+        font-size: 13px;
+    }
+    
+    .wind-current-value, .sunset-data-current, .sunrise-data-current {
+        font-size: 18px;
+    }
+
+    .box {
+        height: 155px;
+    }
+    .sas-current{
+        padding-top: 30px;
+    }
    
 
     .small-boxes1, .small-boxes2{
@@ -473,13 +566,48 @@ body {
     .small-box {
         width: 100%;
     }
-}
-@media screen and (min-height: 660px)  {
+
+    .wind-data {
+        padding-top: 15px;
+        justify-content: space-between;
+    }
+
+    .wind-current {
+        display: grid;
+        grid-template-columns: repeat(2, 80px);
+        justify-items: center;
+        align-items: center;
+        width: 180px;
+      }
+      
+      .wind-current div {
+        grid-row: span 2;
+      }
 
 }
 
+@media screen and (max-width: 555px) {
+    .container-weather {
+        flex-direction: column;
+        row-gap: 15px;
+    }
 
+    .data-city, .five-days-forecast {
+        width: 100%;
+    }
 
+    .container-weather-right {
+        height: 100%;
+    }
+
+    .small-box {
+        padding: 15px 20px;
+    }
+
+    .data-box {
+        margin-top: 20px;
+    }
+}
 /* asd */
 
 .forecast-today {
@@ -573,51 +701,3 @@ body {
 
 
 /*  */
-  @media screen and (max-width: 950px) {
-
-    .wind-icon span,.sunrise-icon span, .sunset-icon span {
-        font-size: 50px;
-        padding: 5px;
-    }
-    
-    .wind-current div h3, .sunset-data-title, .sunrise-data-title {
-        font-size: 16px;
-        color: #959595;
-        text-align: center;
-    }
-    
-    .wind-current-value, .sunset-data-current, .sunrise-data-current {
-        font-size: 25px;
-    }
-
-
-    .data-city, .five-days-forecast {
-        width: 230px;
-    }
-
-    .small-box {
-        padding: 15px;
-        height: 120px;
-
-    }
-    .container-boxes {
-        display: flex;
-        /* column-gap: 10px; */
-        flex-direction: column;
-    }
-
-    .box {
-        width: 100%;
-    }
-
-    .boxes {
-        row-gap: 10px;
-    }
-    
-    .container-weather-right {
-        height: 580px;
-        overflow-y: auto;
-    }
-
-
-}
