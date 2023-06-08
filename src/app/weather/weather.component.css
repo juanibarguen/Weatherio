@@ -272,8 +272,7 @@ body {
 .container-weather-right {
     color: #fff;
     width: 100%;
-    height: 100%;
-    
+    height: 100%;    
 }
 
 .container-weather-right-content {
@@ -306,10 +305,20 @@ body {
     justify-content: space-between;
 }
 
+.quality-text-title {
+    color: #959595;
+}
+
 .wind-data, .sas-current{
     display: flex;
     flex-direction: row;
     padding-top: 50px;
+}
+
+.wind-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .data-box {
@@ -331,8 +340,19 @@ body {
     justify-content: space-between;
 }
 
+.sunrise-and-sunset-title {
+    color: #959595;
+}
+
 .sunrise, .sunset {
     display: flex;
+    /* column-gap: 10px; */
+}
+
+.sunrise-icon, .sunset-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .small-boxes {
@@ -356,38 +376,19 @@ body {
     background-color: #1C1B1F;
 }
 
+.small-box p {
+    color: #959595;
+}
 @media screen and (max-width: 1100px) {
     .data-city, .five-days-forecast {
         width: 250px;
     }
+    .current-temp p, .current-temp span {
+        font-size: 55px;
+    }
 }
 
-@media screen and (max-width: 950px) {
-    .data-city, .five-days-forecast {
-        width: 230px;
-    }
 
-    .small-box {
-        padding: 15px;
-        height: 120px;
-
-    }
-    .container-boxes {
-        display: flex;
-        /* column-gap: 10px; */
-        flex-direction: column;
-    }
-
-    .box {
-        width: 100%;
-    }
-
-    .boxes {
-        row-gap: 10px;
-    }
-
-
-}
 
 @media screen and (max-width: 875px) {
     .small-boxes {
@@ -405,15 +406,7 @@ body {
     
 }
 
-@media screen and (max-width: 660px) {
-    .small-boxes1, .small-boxes2{
-        flex-direction: column;
-        row-gap: 10px;
-    }
-    .small-box {
-        width: 100%;
-    }
-}
+
 
 
 
@@ -453,9 +446,18 @@ body {
 }
 
 @media screen and (min-height: 660px)  {
-    /* body {
-        display: none;
-    } */
+    .container-weather-right-content {
+        
+        height: auto;
+    }
+
+    .small-boxes1, .small-boxes2{
+        flex-direction: column;
+        row-gap: 10px;
+    }
+    .small-box {
+        width: 100%;
+    }
 }
 
 
@@ -504,5 +506,66 @@ body {
   .forecast-data-hours {
     width: 100%;
     height: 100px;background-color: #fedfdf;
-    padding: 10px;
+    padding: 1h0px;
   }
+
+  @media screen and (max-width: 950px) {
+
+    .highlights-title{
+        padding: 5px 0 15px 5px;
+    }
+
+    .wind-current div  h3 {
+        text-align: center;
+        color: #959595;
+    }
+    .wind-current-value {
+        font-size: 30px;
+    }
+    .sunrise-data-current,.sunset-data-current {
+        font-size: 30px;
+    }
+
+    .sunset-data-title, .sunrise-data-title {
+        color: #959595;
+        font-weight: 600;
+    }
+
+    .sunrise-icon span, .sunset-icon span {
+        font-size: 45px;
+        padding: 5px;
+    }
+
+    .current-temp p, .current-temp span {
+        font-size: 50px;
+    }
+    .data-city, .five-days-forecast {
+        width: 230px;
+    }
+
+    .small-box {
+        padding: 15px;
+        height: 120px;
+
+    }
+    .container-boxes {
+        display: flex;
+        /* column-gap: 10px; */
+        flex-direction: column;
+    }
+
+    .box {
+        width: 100%;
+    }
+
+    .boxes {
+        row-gap: 10px;
+    }
+    
+    .container-weather-right {
+        height: 580px;
+        overflow-y: auto;
+    }
+
+
+}
