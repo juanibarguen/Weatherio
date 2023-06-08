@@ -96,6 +96,33 @@ body {
 
 
 
+.nav-search-mf{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    color: #090909;
+}
+.icon-search-mf{
+    border-radius: 0;
+}
+.input-search-mff{
+    width: 100%;
+    
+}
+
+.list-container-mf {
+    height: 100%;
+    background: #6735cd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+
+
+
 
 
 @media screen and (max-width: 768px) {
@@ -105,6 +132,7 @@ body {
 
     .icon-search {
         border-radius: 50%;
+        cursor: pointer;
     }
 
     .nav-actions {
@@ -598,6 +626,7 @@ body {
 
     .container-weather-right {
         height: 100%;
+        padding-bottom: 2em;
     }
 
     .small-box {

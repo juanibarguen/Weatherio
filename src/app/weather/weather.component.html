@@ -23,19 +23,20 @@
 
     <div class="nav-actions">
     
-    <div class="nav-search">
+    <div class="nav-search" #navSearch>
 
         <div class="container-input-search">
-            <div class="icon-search">
+            <div class="icon-search" #iconSearch (click)="openInputSearch()">
             <span class="material-symbols-outlined">search</span>            
             </div>
 
-            <div class="input-search">
-            <input [formControl]="control" type="text" name="cityName" id="cityName" placeholder="Search city.." [(ngModel)]="city" (keyup.enter)="executeFunctions()" autocomplete="off">
-                
+            <div class="input-search" #inputSearchContainer>
+            <input #inputSearch [formControl]="control" type="text" name="cityName" id="cityName" placeholder="Search city.." [(ngModel)]="city" (keyup.enter)="executeFunctions()" autocomplete="off">
             </div>
         </div>
+       
         <ul #myListElement *ngIf="showCitiesList" class="list-container slide">
+       
 
             <li *ngFor="let city of cities" class="item">
                <div class="icon-location">

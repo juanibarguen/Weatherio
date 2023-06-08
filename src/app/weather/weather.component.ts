@@ -15,13 +15,9 @@ export class WeatherComponent implements OnInit{
 
   off = false
   currentDate: Date = new Date();
-
   control = new FormControl();
-
   showCitiesList: boolean = true;
-
   cities: any[] = [];
-  @ViewChild('myListElement', { static: false }) myListElement!: ElementRef;
 
   // cityName:any
   city!:string;
@@ -39,9 +35,51 @@ export class WeatherComponent implements OnInit{
   indexClass: string | undefined;
   nombre: string | undefined;
 
+  @ViewChild('listContainer') myListElement!: ElementRef;
+
+  cityByIP: string | undefined
+  latByIP: number | undefined
+  lonByIP: number | undefined
+  
   constructor( private apiService: WeatherService, private http: HttpClient) {}
 
   ngOnInit(): void {
+
+
+    //Obtenemos la ubicacion del usuario a travez de la IP
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latByIP = position.coords.latitude;
+        this.lonByIP = position.coords.longitude;
+        // Aquí puedes usar las coordenadas para obtener la ubicación actual del usuario
+        console.log("Lat: "+ typeof this.latByIP);
+        console.log("Lon: "+this.lonByIP);
+
+        // console.log(this.apiService.currentWeatherByCord(this.latByIP,this.lonByIP));
+
+        this.apiService.currentWeatherByCord(this.latByIP, this.lonByIP).subscribe(data => {
+          this.weatherData = data;
+          this.city = this.weatherData.name;
+          console.log(this.weatherData.name);
+
+          this.getForecast()
+          this.getPollutionAir(this.city)
+          this.city = ''; 
+
+        });
+        
+
+      }, (error) => {
+        // Manejo de errores
+        console.log("Error: " +error);
+
+      });
+    } else {
+        console.log("El navegador no admite la geolocalización");
+        
+    }
+
+    
     // obtenemos la fecha actual en el formato indicado: 'Sunday 4, Jun'
     // EN
     this.formattedDateEnUs = format(this.currentDate, "EEEE d, MMM", { locale: enUS });
@@ -56,6 +94,10 @@ export class WeatherComponent implements OnInit{
     if (!this.myListElement.nativeElement.contains(event.target)) {
       this.showCitiesList = false;
     }
+  }
+
+  openInputSearch() {
+
   }
 
   observerChangeSearch() {
@@ -117,6 +159,7 @@ export class WeatherComponent implements OnInit{
     this.city = ''; 
   }
 
+
   getForecast() {
     if (this.city) {
       this.apiService.forecast(this.city).subscribe(data => {
@@ -172,7 +215,7 @@ export class WeatherComponent implements OnInit{
         // console.log(data); // Acceder al valor de la propiedad "index"
         // console.log(this.datosContaminacionAire.list[0].main.aqi);
         this.indexAirPollution(this.datosContaminacionAire.list[0].main.aqi!);
-        console.log(this.datosContaminacionAire.list[0].main.aqi!);
+        // console.log(this.datosContaminacionAire.list[0].main.aqi!);
         
       },
       (error: any) => {
@@ -215,27 +258,27 @@ export class WeatherComponent implements OnInit{
       case 1:
         this.indexValue = "Good";
         this.indexClass = "good";
-        console.log("Good");
+        // console.log("Good");
         break;
       case 2:
         this.indexValue = "Fair";
         this.indexClass = "fair";
-        console.log("Fair");
+        // console.log("Fair");
         break;
       case 3:
         this.indexValue = "Moderate";
         this.indexClass = "moderate";
-        console.log("Moderate");
+        // console.log("Moderate");
         break;
       case 4:
         this.indexValue = "Poor";
         this.indexClass = "poor";
-        console.log("Poor");
+        // console.log("Poor");
         break;
       case 5:
         this.indexValue = "Very Poor";
         this.indexClass = "very-poor";
-        console.log("Very Poor");
+        // console.log("Very Poor");
         break;
       default:
         console.log("Default case");
