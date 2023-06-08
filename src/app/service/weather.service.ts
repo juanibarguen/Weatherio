@@ -13,19 +13,21 @@ export class WeatherService {
 
 
   private apiKey = 'a3affa3e3df25f10c609f877595f4d82'
+  private apiKey2 = '5a2129314f5ee33b438022ad4fdea36b'
   city: string | undefined
 
   constructor(private http: HttpClient) { }
 
-  currentWeather(city: string): Observable<any> {
-    return this.http.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey}`);
+  currentWeatherByCord(lat:number, lon:number): Observable<any> {
+    return this.http.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey2}`)
   }
-  
-  currentWeatherForC(lat: string, lon:string): Observable<any> {
-    return this.http.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}`);  }
+
+  currentWeather(city: string): Observable<any> {
+    return this.http.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey2}`);
+  }
 
   forecast(city:string): Observable<any> {
-    return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey}`);
+    return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey2}`);
   }
 
   airpollution(city: string): Observable<any> {
@@ -34,13 +36,13 @@ export class WeatherService {
         const lat = weatherData.coord.lat;
         const lon = weatherData.coord.lon;
         
-        return this.http.get(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${this.apiKey}`);
+        return this.http.get(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${this.apiKey2}`);
       })
     );
   }
   
     geo(query:string) {
-      return this.http.get(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey}`)
+      return this.http.get(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey2}`)
     }
   
 
