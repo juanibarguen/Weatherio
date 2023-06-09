@@ -45,5 +45,4 @@ export class WeatherService {
       return this.http.get(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey2}`)
     }
   
-
 }

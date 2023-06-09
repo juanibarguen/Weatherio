@@ -73,6 +73,7 @@ body {
 }
 
 .nav-current-location {
+    cursor:pointer;
     background: #BEABE9;
     height: 40px;
     padding:10px;

@@ -47,37 +47,37 @@ export class WeatherComponent implements OnInit{
 
 
     //Obtenemos la ubicacion del usuario a travez de la IP
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latByIP = position.coords.latitude;
-        this.lonByIP = position.coords.longitude;
-        // Aquí puedes usar las coordenadas para obtener la ubicación actual del usuario
-        console.log("Lat: "+ typeof this.latByIP);
-        console.log("Lon: "+this.lonByIP);
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition((position) => {
+    //     this.latByIP = position.coords.latitude;
+    //     this.lonByIP = position.coords.longitude;
+    //     // Aquí puedes usar las coordenadas para obtener la ubicación actual del usuario
+    //     console.log("Lat: "+ typeof this.latByIP);
+    //     console.log("Lon: "+this.lonByIP);
 
-        // console.log(this.apiService.currentWeatherByCord(this.latByIP,this.lonByIP));
+    //     // console.log(this.apiService.currentWeatherByCord(this.latByIP,this.lonByIP));
 
-        this.apiService.currentWeatherByCord(this.latByIP, this.lonByIP).subscribe(data => {
-          this.weatherData = data;
-          this.city = this.weatherData.name;
-          console.log(this.weatherData.name);
+    //     this.apiService.currentWeatherByCord(this.latByIP, this.lonByIP).subscribe(data => {
+    //       this.weatherData = data;
+    //       this.city = this.weatherData.name;
+    //       console.log(this.weatherData.name);
 
-          this.getForecast()
-          this.getPollutionAir(this.city)
-          this.city = ''; 
+    //       this.getForecast()
+    //       this.getPollutionAir(this.city)
+    //       this.city = ''; 
 
-        });
+    //     });
         
 
-      }, (error) => {
-        // Manejo de errores
-        console.log("Error: " +error);
+    //   }, (error) => {
+    //     // Manejo de errores
+    //     console.log("Error: " +error);
 
-      });
-    } else {
-        console.log("El navegador no admite la geolocalización");
+    //   });
+    // } else {
+    //     console.log("El navegador no admite la geolocalización");
         
-    }
+    // }
 
     
     // obtenemos la fecha actual en el formato indicado: 'Sunday 4, Jun'
@@ -172,41 +172,41 @@ export class WeatherComponent implements OnInit{
     }
   }
 
-  getForecastHours() {
-  if (this.city) {
-    this.apiService.forecast(this.city).subscribe(data => {
-      const currentDate = new Date(); // Obtiene la fecha y hora actual
-      const currentHour = currentDate.getHours(); // Obtiene la hora actual
-      let nextMultipleOfThree = Math.ceil(currentHour / 3) * 3; // Calcula la próxima hora múltiplo de 3
+  // getForecastHours() {
+  // if (this.city) {
+  //   this.apiService.forecast(this.city).subscribe(data => {
+  //     const currentDate = new Date(); // Obtiene la fecha y hora actual
+  //     const currentHour = currentDate.getHours(); // Obtiene la hora actual
+  //     let nextMultipleOfThree = Math.ceil(currentHour / 3) * 3; // Calcula la próxima hora múltiplo de 3
 
-      let count = 0;
-      this.forecastDataHours = []; // Reinicia el array antes de llenarlo nuevamente
+  //     let count = 0;
+  //     this.forecastDataHours = []; // Reinicia el array antes de llenarlo nuevamente
 
-      for (let i = 0; i < data.list.length; i++) {
-        const forecastDate = new Date(data.list[i].dt_txt); // Obtiene la fecha y hora del pronóstico
+  //     for (let i = 0; i < data.list.length; i++) {
+  //       const forecastDate = new Date(data.list[i].dt_txt); // Obtiene la fecha y hora del pronóstico
 
-        // Verifica si la hora del pronóstico coincide con la hora calculada
-      if (forecastDate.getHours() === nextMultipleOfThree) {
-        const forecastHour = forecastDate.getHours().toString().padStart(2, '0'); // Obtiene la hora y ajusta el formato
-        const forecastTime = `${forecastHour}:00`; // Crea el formato HH:00 para la hora
-        this.forecastDataHours.push({
-          time: forecastTime,
-          main: data.list[i].weather[0].main,
-          temp: data.list[i].main.temp
-        });
-        count++;
-        const nextHour = nextMultipleOfThree + 3 * count; // Calcula la próxima hora múltiplo de 3 para el próximo pronóstico
-        nextMultipleOfThree = nextHour >= 24 ? nextHour - 24 : nextHour; // Ajusta la próxima hora si supera las 24 horas
-        // Verifica si se han obtenido exactamente 8 pronósticos
-        if (count >= 8) {
-          break;
-        }
-      }
-    }
-  // console.log(this.forecastDataHours);
-    });
-  }
-  }
+  //       // Verifica si la hora del pronóstico coincide con la hora calculada
+  //     if (forecastDate.getHours() === nextMultipleOfThree) {
+  //       const forecastHour = forecastDate.getHours().toString().padStart(2, '0'); // Obtiene la hora y ajusta el formato
+  //       const forecastTime = `${forecastHour}:00`; // Crea el formato HH:00 para la hora
+  //       this.forecastDataHours.push({
+  //         time: forecastTime,
+  //         main: data.list[i].weather[0].main,
+  //         temp: data.list[i].main.temp
+  //       });
+  //       count++;
+  //       const nextHour = nextMultipleOfThree + 3 * count; // Calcula la próxima hora múltiplo de 3 para el próximo pronóstico
+  //       nextMultipleOfThree = nextHour >= 24 ? nextHour - 24 : nextHour; // Ajusta la próxima hora si supera las 24 horas
+  //       // Verifica si se han obtenido exactamente 8 pronósticos
+  //       if (count >= 8) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // // console.log(this.forecastDataHours);
+  //   });
+  // }
+  // }
 
   getPollutionAir(ciudad: string) {
     this.apiService.airpollution(ciudad).subscribe(
@@ -227,7 +227,7 @@ export class WeatherComponent implements OnInit{
   
 
   executeFunctions() {
-    this.getForecastHours ()
+    // this.getForecastHours ()
     this.getForecast();
     this.getWeather();
   }
@@ -283,6 +283,25 @@ export class WeatherComponent implements OnInit{
       default:
         console.log("Default case");
         break;
+    }
+  }
+
+  getCoordinates(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Obtener las coordenadas
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          console.log('Latitud:', latitude);
+          console.log('Longitud:', longitude);
+        },
+        (error) => {
+          console.log('Error al obtener la ubicación:', error);
+        }
+      );
+    } else {
+      console.log('La geolocalización no es soportada por este navegador.');
     }
   }
   
