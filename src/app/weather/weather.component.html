@@ -1,19 +1,4 @@
-<!-- 
-        <ul #myListElement *ngIf="showCitiesList" class="list-container slide">
-            <li *ngFor="let city of cities" class="item">
-                <div class="icon-location">
-                    <span class="material-symbols-outlined">location_on</span>
-                </div>
-                <div class="data-location-search">
-                    <p class="search-city">{{ city.name }}</p>
-                    <p class="search-location">{{city.state}}, {{ city.country }}</p>
-                </div>
-            </li> 
-            <li class="not-result" *ngIf="cities.length === 0">
-                <p>Not results found</p>
-              </li>
-        </ul>
-  -->
+<!-- TEMPLATE ANTERIOR
 
  <nav class="navbar">
 
@@ -221,80 +206,56 @@
     <h3 class="today-title">Today at: </h3>
 
     
-   <!-- <div class="row">
-      
-        <div class="carousel" id="carrousel">
-          <div class="card-container">
-
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-
-
-
-            
-            
-        </div>
-    </div>
-    
-    </div> -->
-
     <div class="forecast-data-hours"></div>
 
 
 </div>
-</section>
+</section> -->
 
 
 
-<!-- <div class="card" *ngFor="let forecastDataHour of forecastDataHours">
-    <p>{{forecastDataHour.time}}</p>
-    <span class="material-symbols-outlined">rainy</span>
-    <p>{{convertToCelsius(forecastDataHour.temp)}}°C</p>
-</div> -->
+
+<nav class="navbar">
+
+    <div class="nav-logo">
+        <h1>Weatherio</h1>
+    </div>
+
+    <div class="nav-actions">
+    
+         <div class="nav-search" #navSearch>
+
+            <div class="container-input-search">
+                <div class="icon-search"><span class="material-symbols-outlined">search</span></div>
+
+            <div class="input-search" #inputSearchContainer>
+            <input placeholder="Search city.." autocomplete="off">
+            </div>
+        </div>
+       
+        <ul class="list-container slide">
+       
+
+            <li class="item">
+               <div class="icon-location">
+                 <span class="material-symbols-outlined">location_on</span>
+             </div>
+             <div class="data-location-search">
+                   <p class="search-city">Rosario</p>
+                   <p class="search-location">Santa Fe, AR</p>
+             </div>
+            </li> 
+                
+            <li class="not-result">
+              <p>Not results found</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="nav-current-location">
+        <span class="material-symbols-outlined">my_location</span>
+        <p>Current Location</p>
+    </div>
+
+    </div>
+</nav>
