@@ -1,10 +1,9 @@
-
+/* ESTILOS ANTERIORES
 body {
     max-width: 1300px;
     margin: 0 auto;
 }
 
-/* nav */
 
 .navbar {
     width: 100%;
@@ -242,7 +241,6 @@ body {
     font-size: 14px;
 }
 
-/* DATA CITY */
 
 .container-weather {
     display: flex;
@@ -302,7 +300,6 @@ body {
     column-gap: 5px;
 }
 
-/* BOXES */
 
 .container-weather-right {
     color: #fff;
@@ -337,7 +334,6 @@ body {
     font-size: 25px;
 }
 
-/* Air Quality Index */
 
 .quality-text {
     display: flex;
@@ -396,7 +392,7 @@ body {
     align-items: center;
 }
 
-/* Sunrise and sunset */
+
 
 .sas-current {
     display: flex;
@@ -409,7 +405,7 @@ body {
 
 .sunrise, .sunset {
     display: flex;
-    /* column-gap: 10px; */
+    
 }
 
 
@@ -638,7 +634,7 @@ body {
         margin-top: 20px;
     }
 }
-/* asd */
+
 
 .forecast-today {
     display: flex;
@@ -716,7 +712,6 @@ body {
 
 
 
-  /* pruebra */
 
   .forecast-data-hours {
     width: 100%;
@@ -730,4 +725,33 @@ body {
 }
 
 
-/*  */
+ */
+
+
+
+ .list-container {
+    display: none;
+
+ }
+
+
+ /* NAVBAR */
+
+ .navbar {
+    display: flex;
+    justify-content: space-between;
+ }
+
+ .nav-actions {
+    display: flex;
+    width: 65%;
+    justify-content: space-between;
+ }
+
+ .container-input-search {
+    display: flex;
+ }
+
+ .container-input-search > input {
+    width: 300px;
+ }
