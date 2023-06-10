@@ -734,7 +734,16 @@ body {
     height: 100vh;
     background-color: lightcoral;
 }
-
+.nav-setting {
+    display: none;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    background-color: #686868;       
+    border-radius: 50%;
+}
 
  /* NAVBAR */
 
