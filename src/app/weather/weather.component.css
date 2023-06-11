@@ -1,5 +1,5 @@
 .container-home {
-    background: #D6D7DA;
+    background: linear-gradient(to bottom, #D6D7DA, #C5C6CA);
     height: 100vh;
     width: 100%;
 }
@@ -9,7 +9,23 @@
     width: 90%;
     margin: 0 auto;
     padding-top: 40px;
-    height: 520px;
+    height: 600px;
+    
+}
+
+.current-description, .current-location {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.current-description p, .current-location p {
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.current-location img {
+    width: 30px;
 }
 
 .left {
@@ -18,6 +34,18 @@
     background: #fff;
     width: 250px;
     padding: 20px 30px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.left-bottom{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100;
+    height: 100%;
+    justify-content: space-between;
 }
 
 .input-search {
@@ -33,16 +61,25 @@
 .input-search input {
     background-color: none;
     border: none;
+    color: #1f1f1f;
 }
-
+.input-search > input:focus {
+    outline: none;
+    border: none;
+    color: #1f1f1f;
+}
 
 
 /* RIGHT */
 
 .right {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background: #F6F6F8;
     width: 100%;
     padding: 20px 30px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    overflow: auto;
 }
 
 .right-navbar {
@@ -50,25 +87,45 @@
     justify-content: space-between;
 }
 
+.current-temp {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .current-temp svg {
     fill: rgb(106, 106, 106);
     font-size: 140px;
 }
 
+.current-temp p {
+    font-size: 50px;
+}
+
+.current-date p {
+    padding: 10px 0;
+}
 .container-card {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 20px;
     padding-top: 20px;
 }
 
 .card {
-    width: 70px;
     background-color: #fff;
     padding: 10px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 40px;
 }
 
 .data-select button {
@@ -78,6 +135,27 @@
     margin-right: 10px;
 }
 
+.mode {
+    cursor: pointer;
+    background-color: #fff;
+    height: 25px;
+    width: 25px;
+    margin-left: 10px;
+    border-radius: 50%;
+}
+
+.lm {
+    font: 12px;
+}
+.temp-select {
+    display: flex;
+}
+
+
+.data-select button.active {
+    border-bottom: 2px solid;
+  }
+
 .btn-navbar {
     display: flex;
 }
@@ -86,8 +164,7 @@
     display: flex;
     align-items: center;
     column-gap: 5px;
-    padding: 0 5px;
-    margin-left: 5px;
+    padding:5px;
     background: #BFACE9;
     border: none;
     border-radius: 10px;
@@ -121,25 +198,83 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 10px; /* Espacio entre los divs */
+
   }
 
   .box {
-    background-color: #ccc;
+    background-color: #fff;
     padding: 20px;
-    height: 120px;
+    height: 150px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
+  .box p {
+    text-align: left;
+  }
+
+  .data-box {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .data-box img  {
+    width: 30px;
+  }
+
+  
 
   /* 830 */
-@media screen and (max-width:830px){
+@media screen and (max-width:850px){
     .boxes {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(3, 1fr);
         gap: 10px; /* Espacio entre los divs */
         height: 250px;
-        overflow: auto;
+        /* overflow: auto; */
     }
     
+}
+
+
+
+@media screen and (max-width:1030px){
+
+     
+.container-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.card {
+    flex-direction: row;
+    justify-content: space-around;
+}
+    
+}
+
+@media screen and (max-width:700px){
+    .container-card {
+        flex-direction: row ;
+        display: flex;
+        overflow: auto;
+    }
+    .card {
+        flex-direction: column;
+    }
+    .boxes {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+    }
+    .box {
+        height: 100px;
+    }
 }
