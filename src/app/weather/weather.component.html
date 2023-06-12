@@ -43,6 +43,7 @@
     
                 <div class="current-location">
                     <img src="assets/icons/icons8-location-80.png" alt="">
+                    <!-- <img [src]="item.imgDescription"> -->
                     <div *ngIf="currentWeatherData" class="current-location-data">
                         <p>{{currentWeatherData.name}},</p>
 
@@ -57,9 +58,10 @@
             <div class="right-navbar">
 
                 <div class="data-select">
-                    <button class="today active">Today</button>
-                    <button class="week">Week</button>
-                </div>
+                    <button class="today" [ngClass]="{'active': activeTab === 'today'}" (click)="activeTab = 'today'">Today</button>
+                    <button class="week" [ngClass]="{'active': activeTab === 'week'}" (click)="activeTab = 'week'">Week</button>
+                  </div>
+                  
 
                     <div class="temp-select">
                         <button>C</button>
@@ -70,13 +72,23 @@
                 
             </div>
 
-            <div class="container-card">
+            <div class="container-card" *ngIf="activeTab === 'today'">
                 <div class="card" *ngFor="let item of forecastTimes">
-                    <p>{{ item.time }}</p>
-                    <img [src]="item.imgDescription">
-                    <p>{{ convertToCelsius(item.temp) }} </p>
+                  <p>{{ item.time }}</p>
+                  <img [src]="item.imgDescription">
+                  <p>{{ convertToCelsius(item.temp) }}°C</p>
+                </div>
+              </div>
+              
+              <div class="container-card" *ngIf="activeTab === 'week'">
+                <div class="card" *ngFor="let day of forecastDays">
+                  <p>{{ day.date }}</p>
+                  <img [src]="day.imgDescription">
+                  <div *ngFor="let temperature of day.temperatures">
+                    <p>{{ convertToCelsius(temperature) }}°C</p>
                   </div>
-            </div>
+                </div>
+              </div>
 
             <div class="container-boxes">
 

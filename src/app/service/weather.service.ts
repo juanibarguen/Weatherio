@@ -33,8 +33,8 @@ export class WeatherService {
     return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey2}`);
   }
 
-    geo(query:string) {
-      return this.http.get(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey2}`)
-    }
+  geo(query:string) {
+    return this.http.get(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey2}`)
+  }
   
 }
