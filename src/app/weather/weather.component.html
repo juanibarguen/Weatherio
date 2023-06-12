@@ -63,11 +63,11 @@
                   </div>
                   
 
-                    <div class="temp-select">
-                        <button>C</button>
-                        <button>F</button>
-                        <div class="mode"><span class="material-symbols-outlined lm">light_mode</span></div>
-                    </div>
+                  <div class="temp-select">
+                    <button [ngClass]="{ 'celcius': selectedTemperature === 'C' }" (click)="toggleTemperature('C')">C</button>
+                    <button [ngClass]="{ 'farenheit': selectedTemperature === 'F' }" (click)="toggleTemperature('F')">F</button>
+                    <div class="mode"><span class="material-symbols-outlined lm">light_mode</span></div>
+                  </div>
                     
                 
             </div>
@@ -82,7 +82,7 @@
               
               <div class="container-card" *ngIf="activeTab === 'week'">
                 <div class="card" *ngFor="let day of forecastDays">
-                  <p>{{ day.date }}</p>
+                  <p>{{ getDayOfWeek(day.date) }}</p>
                   <img [src]="day.imgDescription">
                   <div *ngFor="let temperature of day.temperatures">
                     <p>{{ convertToCelsius(temperature) }}°C</p>
