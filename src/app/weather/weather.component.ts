@@ -13,6 +13,7 @@ import { debounceTime } from 'rxjs';
 export class WeatherComponent implements OnInit {
   currentWeatherData: any; // Acceder al endpoint Current de la API
   forecastData: any; // Acceder al endpoint Forecast de la API
+
   // Coordenadas actuales
   latitude!: number
   longitude!: number;
@@ -28,57 +29,46 @@ export class WeatherComponent implements OnInit {
   currentMinute:any
   today:any
 
-
-  //Acceder al dia 
-  getToday(): string {
-    const currentDate = new Date();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-    const day = currentDate.getDate().toString().padStart(2, '0');
-    const year = currentDate.getFullYear().toString();
-  
-    return `${month}/${day}/${year}`;
-  }
-  
-
-  getCurrentTime(): string {
-    const currentTime = new Date();
-    let currentHour = currentTime.getHours();
-    const currentMinute = currentTime.getMinutes();
-    let period = 'AM';
-  
-    if (currentHour >= 12) {
-      period = 'PM';
-      if (currentHour > 12) {
-        currentHour -= 12;
-      }
-    }
-  
-    return `${currentHour}:${currentMinute} ${period}`;
-  }
-  
-  
-  
-   
-
+  forecastTimes: any[] = [];
 
   
-
   constructor(
     private weatherService: WeatherService,
     private http: HttpClient,
-  ) {}
-
-
-  ngOnInit(): void {
-    console.log(this.getToday());
+    ) {}
     
+    ngOnInit(): void {
+      this.getCurrentWeather();
+      this.getForecast(this.weatherService.city);
+      this.observerChangeSearch();
+    }
 
-    this.getCurrentWeather();
-    this.getForecast(this.weatherService.city);
-    this.observerChangeSearch();
+
+    //Acceder al dia 
+  getToday(): string {
+      const currentDate = new Date();
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+      const day = currentDate.getDate().toString().padStart(2, '0');
+      const year = currentDate.getFullYear().toString();
+    
+      return `${month}/${day}/${year}`;
   }
-
-  
+    
+  getCurrentTime(): string {
+      const currentTime = new Date();
+      let currentHour = currentTime.getHours();
+      const currentMinute = currentTime.getMinutes();
+      let period = 'AM';
+    
+      if (currentHour >= 12) {
+        period = 'PM';
+        if (currentHour > 12) {
+          currentHour -= 12;
+        }
+      }
+    
+      return `${currentHour}:${currentMinute} ${period}`;
+  }
 
   getLocation(): void {
     if (navigator.geolocation) {
@@ -100,6 +90,11 @@ export class WeatherComponent implements OnInit {
       (data: any) => {
         this.currentWeatherData = data
         console.log(this.currentWeatherData);
+
+        // Vaciar la lista de pronósticos antes de agregar nuevos elementos
+        this.forecastTimes = [];
+
+        this.getForecast(data.name);
       }
     )
   }
@@ -108,14 +103,7 @@ export class WeatherComponent implements OnInit {
     this.weatherService.currentWeather(this.weatherService.city).subscribe(
       (data: any) => {
         this.currentWeatherData = data;
-        console.log(this.currentWeatherData);
-
-        if (data.visibility) {
-          console.log('Visibilidad:', data.visibility);
-        } else {
-          console.log('No se encontró información de visibilidad.');
-        }
-        
+        // console.log(this.currentWeatherData.name);
       },
       (error: any) => {
         console.error('Error al obtener el clima actual:', error);
@@ -124,20 +112,71 @@ export class WeatherComponent implements OnInit {
   }
 
   getForecast(city: string): void {
-    this.weatherService.forecast(city)
-      .subscribe(
-        (data: any) => {
-          this.forecastData = data; // Asignamos los datos del pronóstico a la variable
-          // Aquí puedes realizar cualquier acción adicional con los datos del pronóstico
-          console.log(this.forecastData);
+    this.weatherService.forecast(city).subscribe(
+      (data: any) => {
+        this.forecastData = data;
+        console.log(this.forecastData);
+  
+        for (let i = 0; i < 7; i++) {
+          const dateTemp = this.forecastData.list[i].main.temp;
+          const dateTime = this.forecastData.list[i].dt_txt;
+          const dateDescrip = this.forecastData.list[i].weather[0].description;
+          const time = dateTime.split(" ")[1];
+          const hourAndMinute = time.substring(0, 5);
+  
+          let imgDescription: string; // Variable para almacenar la ruta de la imagen
+  
+          switch (dateDescrip) {
+            case 'clear sky':
+            case 'few clouds':
+            case 'scattered clouds':
+            case 'overcast clouds':
+              case 'broken clouds':
+              imgDescription = 'assets/icons/icons8-clouds-80.png';
+              break;
+            case 'drizzle':
+              case 'light rain':
+              imgDescription = 'assets/icons/icons8-drizzle-80.png';
+              break;
+            case 'rain':
+              imgDescription = 'assets/icons/icons8-rain-80.png';
+              break;
+            case 'shower rain':
+              imgDescription = 'assets/icons/icons8-heavy-rain-80.png';
+              break;
+            case 'thunderstorm':
+              imgDescription = 'assets/icons/icons8-cloud-lightning-80.png';
+              break;
+            case 'snow':
+              imgDescription = 'assets/icons/icons8-snow-80.png';
+              break;
+            case 'mist':
+              imgDescription = 'assets/icons/icons8-haze-80.png';
+              break;
+            default:
+              console.log(this.forecastData.list[i].weather[0].description);
+              imgDescription = 'assets/icons/default.png';
+              break;
+          }
           
-        },
-        (error: any) => {
-          console.error('Error al obtener el pronóstico:', error);
+  
+          const forecastItem = {
+            time: hourAndMinute,
+            main: dateDescrip,
+            temp: dateTemp,
+            imgDescription: imgDescription
+          };
+  
+          this.forecastTimes.push(forecastItem);
         }
-      );
+  
+        console.log(this.forecastTimes);
+      },
+      (error: any) => {
+        console.error('Error al obtener el pronóstico:', error);
+      }
+    );
   }
-
 
   parseUnixTimeToHour(unixTime: number): string {
     const date = new Date(unixTime * 1000);
@@ -154,13 +193,12 @@ export class WeatherComponent implements OnInit {
   }
   
     // CONVERTIR DE KELVIN A CELSIUS
-    convertToCelsius(tempKelvin: number): number {
+  convertToCelsius(tempKelvin: number): number {
       const tempCelsius = tempKelvin - 273.15;
       const roundedTemp = parseFloat(tempCelsius.toFixed(1));
       return roundedTemp;
-    }
+  }
     
-
   // CONVERTIR DE KELVIN A FAHRENHEIT
   convertToFahrenheit(tempKelvin: number): number {
     return Math.floor((tempKelvin - 273.15) * (9/5) + 32);
@@ -177,7 +215,6 @@ export class WeatherComponent implements OnInit {
     const kilometers = meters / 1000;
     return Math.round(kilometers * 10) / 10;
   }
-
 
   observerChangeSearch() {
     this.control.valueChanges
@@ -207,12 +244,6 @@ export class WeatherComponent implements OnInit {
 
     });
   }
-  
-
-  
-  
-
-
 }
 
 
