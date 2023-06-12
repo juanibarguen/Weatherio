@@ -12,19 +12,22 @@ export class WeatherService {
   // https://api.openweathermap.org/data/2.5/forecast?q={city name}&appid=a3affa3e3df25f10c609f877595f4d82
 
 
-  private apiKey = 'a3affa3e3df25f10c609f877595f4d82'
+  // private apiKey = 'a3affa3e3df25f10c609f877595f4d82'
   private apiKey2 = '5a2129314f5ee33b438022ad4fdea36b'
-  city: string | undefined
+  city: string
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.city = 'Washington';
+   }
+
+  currentWeather(city: string): Observable<any> {
+    return this.http.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey2}`);
+  }
 
   currentWeatherByCord(lat:number, lon:number): Observable<any> {
     return this.http.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey2}`)
   }
 
-  currentWeather(city: string): Observable<any> {
-    return this.http.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey2}`);
-  }
 
   forecast(city:string): Observable<any> {
     return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey2}`);
