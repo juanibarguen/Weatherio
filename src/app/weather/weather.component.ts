@@ -13,6 +13,7 @@ import { debounceTime } from 'rxjs';
 export class WeatherComponent implements OnInit {
   currentWeatherData: any; // Acceder al endpoint Current de la API
   forecastData: any; // Acceder al endpoint Forecast de la API
+
   // Coordenadas actuales
   latitude!: number
   longitude!: number;
@@ -28,57 +29,50 @@ export class WeatherComponent implements OnInit {
   currentMinute:any
   today:any
 
+  forecastTimes: any[] = [];
+  forecastDays: any[] = [];
 
-  //Acceder al dia 
-  getToday(): string {
-    const currentDate = new Date();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-    const day = currentDate.getDate().toString().padStart(2, '0');
-    const year = currentDate.getFullYear().toString();
+  activeTab: string = "today";
   
-    return `${month}/${day}/${year}`;
-  }
-  
-
-  getCurrentTime(): string {
-    const currentTime = new Date();
-    let currentHour = currentTime.getHours();
-    const currentMinute = currentTime.getMinutes();
-    let period = 'AM';
-  
-    if (currentHour >= 12) {
-      period = 'PM';
-      if (currentHour > 12) {
-        currentHour -= 12;
-      }
-    }
-  
-    return `${currentHour}:${currentMinute} ${period}`;
-  }
-  
-  
-  
-   
-
-
-  
-
   constructor(
     private weatherService: WeatherService,
     private http: HttpClient,
-  ) {}
-
-
-  ngOnInit(): void {
-    console.log(this.getToday());
+    ) {}
     
+    ngOnInit(): void {
+      this.activeTab = "today";
 
-    this.getCurrentWeather();
-    this.getForecast(this.weatherService.city);
-    this.observerChangeSearch();
+      this.getCurrentWeather();
+      this.getForecast(this.weatherService.city);
+      this.observerChangeSearch();
+    }
+
+
+    //Acceder al dia 
+  getToday(): string {
+      const currentDate = new Date();
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+      const day = currentDate.getDate().toString().padStart(2, '0');
+      const year = currentDate.getFullYear().toString();
+    
+      return `${month}/${day}/${year}`;
   }
-
-  
+    
+  getCurrentTime(): string {
+      const currentTime = new Date();
+      let currentHour = currentTime.getHours();
+      const currentMinute = currentTime.getMinutes();
+      let period = 'AM';
+    
+      if (currentHour >= 12) {
+        period = 'PM';
+        if (currentHour > 12) {
+          currentHour -= 12;
+        }
+      }
+    
+      return `${currentHour}:${currentMinute} ${period}`;
+  }
 
   getLocation(): void {
     if (navigator.geolocation) {
@@ -100,6 +94,11 @@ export class WeatherComponent implements OnInit {
       (data: any) => {
         this.currentWeatherData = data
         console.log(this.currentWeatherData);
+
+        // Vaciar la lista de pronósticos antes de agregar nuevos elementos
+          this.forecastTimes = [];
+
+        this.getForecast(data.name);
       }
     )
   }
@@ -109,13 +108,6 @@ export class WeatherComponent implements OnInit {
       (data: any) => {
         this.currentWeatherData = data;
         console.log(this.currentWeatherData);
-
-        if (data.visibility) {
-          console.log('Visibilidad:', data.visibility);
-        } else {
-          console.log('No se encontró información de visibilidad.');
-        }
-        
       },
       (error: any) => {
         console.error('Error al obtener el clima actual:', error);
@@ -123,21 +115,141 @@ export class WeatherComponent implements OnInit {
     );
   }
 
-  getForecast(city: string): void {
-    this.weatherService.forecast(city)
-      .subscribe(
-        (data: any) => {
-          this.forecastData = data; // Asignamos los datos del pronóstico a la variable
-          // Aquí puedes realizar cualquier acción adicional con los datos del pronóstico
-          console.log(this.forecastData);
-          
-        },
-        (error: any) => {
-          console.error('Error al obtener el pronóstico:', error);
-        }
-      );
-  }
 
+
+  getForecast(city: string): void {
+    this.weatherService.forecast(city).subscribe(
+      (data: any) => {
+        this.forecastData = data;
+        console.log(this.forecastData);
+  
+        this.forecastTimes = []; // Reiniciar el arreglo de pronósticos
+        this.forecastDays = []; // Reiniciar el arreglo de pronósticos
+  
+        for (let i = 0; i < 7; i++) {
+          const dateTemp = this.forecastData.list[i].main.temp;
+          const dateTime = this.forecastData.list[i].dt_txt;
+          const dateDescrip = this.forecastData.list[i].weather[0].description;
+          const time = dateTime.split(" ")[1];
+          const hourAndMinute = time.substring(0, 5);
+  
+          let imgDescription: string; // Variable para almacenar la ruta de la imagen
+  
+          switch (dateDescrip) {
+            case 'clear sky':
+              imgDescription = 'assets/icons/icons8-sun.png';
+              break;
+            case 'few clouds':
+            case 'scattered clouds':
+            case 'overcast clouds':
+            case 'broken clouds':
+              imgDescription = 'assets/icons/icons8-clouds-80.png';
+              break;
+            case 'drizzle':
+            case 'light rain':
+              imgDescription = 'assets/icons/icons8-drizzle-80.png';
+              break;
+            case 'rain':
+              imgDescription = 'assets/icons/icons8-rain-80.png';
+              break;
+            case 'shower rain':
+              imgDescription = 'assets/icons/icons8-heavy-rain-80.png';
+              break;
+            case 'thunderstorm':
+              imgDescription = 'assets/icons/icons8-cloud-lightning-80.png';
+              break;
+            case 'snow':
+              imgDescription = 'assets/icons/icons8-snow-80.png';
+              break;
+            case 'mist':
+              imgDescription = 'assets/icons/icons8-haze-80.png';
+              break;
+            default:
+              console.log(this.forecastData.list[i].weather[0].description);
+              imgDescription = 'assets/icons/default.png';
+              break;
+          }
+  
+          const forecastItem = {
+            time: hourAndMinute,
+            main: dateDescrip,
+            temp: dateTemp,
+            imgDescription: imgDescription
+          };
+  
+          this.forecastTimes.push(forecastItem);
+        }
+  
+        console.log(this.forecastTimes);
+        // Actualizar el arreglo forecastDays para los 5 días
+        for (let i = 0; i < this.forecastData.list.length; i++) {
+          const forecastItem = this.forecastData.list[i];
+          const dateTime = forecastItem.dt_txt;
+          const date = new Date(dateTime); // Convertir la fecha y hora en un objeto de tipo Date
+          const day = date.getDate();
+          const month = date.getMonth() + 1;
+          const year = date.getFullYear();
+          const hours = date.getHours();
+          const minutes = date.getMinutes();
+  
+          if (hours === 12 && minutes === 0) {
+            const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            const dateTemp = forecastItem.main.temp;
+            const dateDescrip = forecastItem.weather[0].description;
+            const imgDescription = this.getImageDescription(dateDescrip);
+  
+            // Verificar si el día ya existe en el arreglo forecastDays
+            const existingDay = this.forecastDays.find(day => day.date === formattedDate);
+            if (existingDay) {
+              existingDay.temperatures.push(dateTemp);
+            } else {
+              this.forecastDays.push({ date: formattedDate, description: dateDescrip, temperatures: [dateTemp], imgDescription });
+            }
+          }
+        }
+  
+        console.log(this.forecastDays);
+      },
+      (error: any) => {
+        console.error('Error al obtener el pronóstico:', error);
+      }
+    );
+  }
+  
+  getImageDescription(description: string): string {
+    switch (description) {
+      case 'clear sky':
+        return 'assets/icons/icons8-sun.png';
+      case 'few clouds':
+      case 'scattered clouds':
+      case 'overcast clouds':
+      case 'broken clouds':
+        return 'assets/icons/icons8-clouds-80.png';
+      case 'drizzle':
+      case 'light rain':
+        return 'assets/icons/icons8-drizzle-80.png';
+      case 'rain':
+        return 'assets/icons/icons8-rain-80.png';
+      case 'shower rain':
+        return 'assets/icons/icons8-heavy-rain-80.png';
+      case 'thunderstorm':
+        return 'assets/icons/icons8-cloud-lightning-80.png';
+      case 'snow':
+        return 'assets/icons/icons8-snow-80.png';
+      case 'mist':
+        return 'assets/icons/icons8-haze-80.png';
+      default:
+        console.log(description);
+        return 'assets/icons/default.png';
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
 
   parseUnixTimeToHour(unixTime: number): string {
     const date = new Date(unixTime * 1000);
@@ -154,13 +266,12 @@ export class WeatherComponent implements OnInit {
   }
   
     // CONVERTIR DE KELVIN A CELSIUS
-    convertToCelsius(tempKelvin: number): number {
+  convertToCelsius(tempKelvin: number): number {
       const tempCelsius = tempKelvin - 273.15;
       const roundedTemp = parseFloat(tempCelsius.toFixed(1));
       return roundedTemp;
-    }
+  }
     
-
   // CONVERTIR DE KELVIN A FAHRENHEIT
   convertToFahrenheit(tempKelvin: number): number {
     return Math.floor((tempKelvin - 273.15) * (9/5) + 32);
@@ -177,7 +288,6 @@ export class WeatherComponent implements OnInit {
     const kilometers = meters / 1000;
     return Math.round(kilometers * 10) / 10;
   }
-
 
   observerChangeSearch() {
     this.control.valueChanges
@@ -207,12 +317,6 @@ export class WeatherComponent implements OnInit {
 
     });
   }
-  
-
-  
-  
-
-
 }
 
 
