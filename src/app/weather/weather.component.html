@@ -71,52 +71,11 @@
             </div>
 
             <div class="container-card">
-                <div class="card">
-                    <p>06:32</p>
-                    <img src="assets/icons/icons8-haze-80.png" alt="">
-                    <p>14°C</p>
-                </div>
-
-                <div class="card">
-                    <p>06:32</p>
-                    <img src="assets/icons/icons8-clouds-80.png" alt="">
-                    <p>14°C</p>
-                </div>
-                <div class="card">
-                    <p>06:32</p>
-                    <img src="assets/icons/icons8-night-80.png" alt="">
-                    <p>14°C</p>
-                </div>
-                <div class="card">
-                    <p>06:32</p>
-                    <img src="assets/icons/icons8-partly-cloudy-day-80.png" alt="">
-                    <p>14°C</p>
-                </div>
-
-                <div class="card">
-                    <p>06:32</p>
-                    <img src="assets/icons/icons8-sun.png" alt="">
-                    <p>14°C</p>
-                </div>
-
-                <div class="card">
-                    <p>06:32</p>
-                    <img src="assets/icons/icons8-sun.png" alt="">
-                    <p>14°C</p>
-                </div>
-
-                <div class="card">
-                    <p>06:32</p>
-                    <img src="assets/icons/icons8-partly-cloudy-day-80.png" alt="">
-                    <p>14°C</p>
-                </div>
-
-                <div class="card">
-                    <p>06:32</p>
-                    <img src="assets/icons/icons8-partly-cloudy-day-80.png" alt="">
-                    <p>14°C</p>
-                </div>
-
+                <div class="card" *ngFor="let item of forecastTimes">
+                    <p>{{ item.time }}</p>
+                    <img [src]="item.imgDescription">
+                    <p>{{ convertToCelsius(item.temp) }} </p>
+                  </div>
             </div>
 
             <div class="container-boxes">
