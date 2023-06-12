@@ -1,299 +1,182 @@
-<!-- 
-        <ul #myListElement *ngIf="showCitiesList" class="list-container slide">
-            <li *ngFor="let city of cities" class="item">
-                <div class="icon-location">
-                    <span class="material-symbols-outlined">location_on</span>
-                </div>
-                <div class="data-location-search">
-                    <p class="search-city">{{ city.name }}</p>
-                    <p class="search-location">{{city.state}}, {{ city.country }}</p>
-                </div>
-            </li> 
-            <li class="not-result" *ngIf="cities.length === 0">
-                <p>Not results found</p>
-              </li>
-        </ul>
-  -->
+<section class="container-home">
+    <section class="home">
 
- <nav class="navbar">
-
-    <div class="nav-logo">
-        <h1>Weatherio</h1>
-    </div>
-
-    <div class="nav-actions">
-    
-    <div class="nav-search">
-
-        <div class="container-input-search">
-            <div class="icon-search">
-            <span class="material-symbols-outlined">search</span>            
-            </div>
-
+        <div class="left">
             <div class="input-search">
-            <input [formControl]="control" type="text" name="cityName" id="cityName" placeholder="Search city.." [(ngModel)]="city" (keyup.enter)="executeFunctions()" autocomplete="off">
-                
+                <span class="material-symbols-outlined">search</span>
+                <input [formControl]="control" type="text" placeholder="Search city.." autocomplete="off">
+
             </div>
-        </div>
-        <ul #myListElement *ngIf="showCitiesList" class="list-container slide">
-
-            <li *ngFor="let city of cities" class="item">
-               <div class="icon-location">
-                 <span class="material-symbols-outlined">location_on</span>
-             </div>
-             <div class="data-location-search">
-                   <p class="search-city">{{ city.name }}</p>
-                   <p class="search-location">{{city.state}}, {{ city.country }}</p>
-             </div>
-            </li> 
-                
-            <li class="not-result" *ngIf="cities.length === 0">
-              <p>Not results found</p>
-            </li>
-        </ul>
-    </div>
-
-    <div class="nav-current-location">
-        <span class="material-symbols-outlined">my_location</span>
-        <p>Current Location</p>
-    </div>
-
-    </div>
-</nav>
-
-<section class="container-weather">
-
-    <div class="container-weather-left">
-        <div class="data-city">
-            <p class="data-city-title">Now</p>
+    
             <div class="current-temp">
-                <p class="current-temp-title">{{weatherData?.main?.temp}}°C</p>
+                <img src="assets/icons/icons8-haze-80.png" alt="">
+                <p *ngIf="currentWeatherData">{{convertToCelsius(currentWeatherData.main.temp)}}°C</p>
+            </div>
+
+            <div class="current-date">
+                <div class="current-data-today">
+                    <img src="assets/icons/icons8-countdown-clock-80.png" alt="">
+                    <p>Wednesday, {{ getCurrentTime() }}</p>
+                </div>
+                <div class="current-data-date">
+                    <img src="assets/icons/icons8-date-80.png" alt="">
+                    <p>{{getToday()}}</p>
+                </div>
+
+            </div>
+
+            <div class="current-description">
                 <span class="material-symbols-outlined">rainy</span>
+                <p *ngIf="currentWeatherData">{{currentWeatherData.weather[0].description}}</p>
             </div>
-            
-            <p class="current-temp-description">{{description}}</p>
-            <div class="more-data-current">
-                <div class="data-day">
-                    <span class="material-symbols-outlined">calendar_month</span> 
-                    <p>{{ formattedDateEnUs }}</p>
-                </div>
-                <div class="data-location">
-                    <span class="material-symbols-outlined">pin_drop</span> 
-                    <p>{{weatherData.name}}, {{weatherData?.sys?.country}}</p>
-                </div>
-        </div>
-        </div>
-
-        <p class="five-days-forecast-title">5 Day Forecast</p>
-
-        <div class="five-days-forecast">
-            <div class="five-days-forecast-data">
-
-                <div class="next-day" *ngFor="let forecastItem of forecastData; let i = index;" >
-                    <div class="next-day-forecast">
-                        <span class="material-symbols-outlined">cloud</span>
-                        <p>{{ (convertToCelsius(forecastItem.temp)) }}°C</p>
-                    </div>
-    
-                    <div class="next-day-date">
-                        <p>{{ getNextDate(i) | date:'d MMM' }}</p>
-                    </div>
-    
-                    <div class="next-day-name">
-                        <p>{{ getNextDate(i) | date:'EEEE' }}</p>
-                    </div>
-                </div>
-    
-            </div>
-    
-        </div>
-    </div>
-    
-    <div class="container-weather-right">
-        <div class="container-weather-right-content">
-            <p class="highlights-title">Todays Highlights</p>
-
-            <div class="container-boxes boxes">
-
-            <div class="highlights box">
-            <div class="quality">
-               <div class="quality-text">
-                   <p class="quality-text-title">Air Quality Index</p>
-                   <p class="quality-tex-value" [ngClass]="indexClass">{{indexValue}}</p>
-               </div>
-                <div class="wind-data">
-                    <div class="wind-icon"><span class="material-symbols-outlined">air</span>
-                </div>
-                <div class="wind-current" *ngIf="datosContaminacionAire">
-                    <div class="pm">
-                        <h3>PM25</h3>
-                        <p class="wind-current-value">{{ datosContaminacionAire.list[0].components.pm2_5 }}</p>
-                    </div>
-                    <div class="so">
-                        <h3>SO2</h3>
-                        <p class="wind-current-value">{{ datosContaminacionAire.list[0].components.so2 }}</p>
-                    </div>
-                    <div class="no">
-                        <h3>NO2</h3>
-                        <p class="wind-current-value">{{ datosContaminacionAire.list[0].components.no2 }}</p>
-                    </div>
-                    <div class="03">
-                        <h3>O 3</h3>
-                        <p class="wind-current-value"> {{ datosContaminacionAire.list[0].components.o3 }}</p>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-
-        <div class="sunrise-and-sunset box">
-            <p class="sunrise-and-sunset-title">Sunrise and sunset</p>
-            <div class="sas-current">
-                <div class="sunrise">
-                    <div class="sunrise-icon"><span class="material-symbols-outlined">light_mode</span>
-                </div>
-                    <div class="sunrise-data">
-                        <p class="sunrise-data-title">Sunrise</p>
-                        <p class="sunrise-data-current">05:34</p>
-                    </div>
-                </div>
-                <div class="sunset">
-                    <div class="sunset-icon">
-                        <span class="material-symbols-outlined">dark_mode</span>
-                    </div>
-                    <div class="sunset-data">
-                        <p class="sunset-data-title">Sunset</p>
-                        <p class="sunset-data-current">08:34</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-            </div>
-
-            <div class="small-boxes">
-
-            <div class="small-boxes1">
-                <div class="box-humidity small-box">
-                    <p>Humidity</p>
-                    <div class="data-box">
-                        <div class="box-icon"><span class="material-symbols-outlined">
-                            humidity_percentage
-                            </span></div>
-                        <div class="box-current">{{weatherData?.main?.humidity}}%</div>
-                    </div>
-                </div>
-                <div class="box-pressure small-box">
-                    <p>Pressure</p>
-                    <div class="data-box">
-                        <div class="box-icon"><span class="material-symbols-outlined">
-                            water
-                            </span></div>
-                        <div class="box-current">{{weatherData?.main?.pressure}}hPa</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="small-boxes2">
-                <div class="box-visibility small-box">
-                    <p>Visibility</p>
-                    <div class="data-box">
-                        <div class="box-icon"><span class="material-symbols-outlined">
-                            visibility
-                            </span></div>
-                        <div class="box-current">10km</div>
-                    </div>
-                </div>
-                <div class="box-feels-like small-box">
-                    <p>Feels Like</p>
-                    <div class="data-box">
-                        <div class="box-icon"><span class="material-symbols-outlined">
-                            thermostat
-                            </span></div>
-                        <div class="box-current">30°c</div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-    </div>
-
-    <h3 class="today-title">Today at: </h3>
-
-    
-   <!-- <div class="row">
-      
-        <div class="carousel" id="carrousel">
-          <div class="card-container">
-
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-            <div class="card">
-                <p>00:43</p>
-                <span class="material-symbols-outlined">rainy</span>
-                <p>10°C</p>
-            </div>
-
-
-
 
             
-            
-        </div>
-    </div>
+            <hr>
+
+            <div class="left-bottom">
+
     
-    </div> -->
+                <button class="navbar-current-location">
+                    <span class="material-symbols-outlined">my_location</span>
+                    <p (click)="getLocation()">Current Location</p>
+                </button>
+    
+                <div class="current-location">
+                    <img src="assets/icons/icons8-location-80.png" alt="">
+                    <div *ngIf="currentWeatherData" class="current-location-data">
+                        <p>{{currentWeatherData.name}},</p>
 
-    <div class="forecast-data-hours"></div>
+                        <p>{{currentWeatherData.sys.country}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+
+            <div class="right-navbar">
+
+                <div class="data-select">
+                    <button class="today active">Today</button>
+                    <button class="week">Week</button>
+                </div>
+
+                    <div class="temp-select">
+                        <button>C</button>
+                        <button>F</button>
+                        <div class="mode"><span class="material-symbols-outlined lm">light_mode</span></div>
+                    </div>
+                    
+                
+            </div>
+
+            <div class="container-card">
+                <div class="card">
+                    <p>06:32</p>
+                    <img src="assets/icons/icons8-haze-80.png" alt="">
+                    <p>14°C</p>
+                </div>
+
+                <div class="card">
+                    <p>06:32</p>
+                    <img src="assets/icons/icons8-clouds-80.png" alt="">
+                    <p>14°C</p>
+                </div>
+                <div class="card">
+                    <p>06:32</p>
+                    <img src="assets/icons/icons8-night-80.png" alt="">
+                    <p>14°C</p>
+                </div>
+                <div class="card">
+                    <p>06:32</p>
+                    <img src="assets/icons/icons8-partly-cloudy-day-80.png" alt="">
+                    <p>14°C</p>
+                </div>
+
+                <div class="card">
+                    <p>06:32</p>
+                    <img src="assets/icons/icons8-sun.png" alt="">
+                    <p>14°C</p>
+                </div>
+
+                <div class="card">
+                    <p>06:32</p>
+                    <img src="assets/icons/icons8-sun.png" alt="">
+                    <p>14°C</p>
+                </div>
+
+                <div class="card">
+                    <p>06:32</p>
+                    <img src="assets/icons/icons8-partly-cloudy-day-80.png" alt="">
+                    <p>14°C</p>
+                </div>
+
+                <div class="card">
+                    <p>06:32</p>
+                    <img src="assets/icons/icons8-partly-cloudy-day-80.png" alt="">
+                    <p>14°C</p>
+                </div>
+
+            </div>
+
+            <div class="container-boxes">
+
+                <p class="highlights-title">Today's Highlights</p>
+
+                <div *ngIf="currentWeatherData" class="boxes">
+
+                    <div class="sunrise box">
+                        <p>Sunrise</p>
+                        <div class="data-box">
+                            <img src="assets/icons/icons8-sunrise-80.png" alt="">
+                            <p>{{parseUnixTimeToHour(currentWeatherData.sys.sunrise)}}</p>
+                        </div>
+                    </div>
+
+                    <div class="sunset box">
+                        <p>Sunset</p>
+                        <div class="data-box">
+                            <img src="assets/icons/icons8-sunset-80.png" alt="">
+                            <p>{{parseUnixTimeToHour(currentWeatherData.sys.sunset)}}</p>
+                        </div>
+                    </div>
+
+                    <div class="wind box">
+                        <p>Wind Status</p>
+                        <div class="data-box">
+                            <img src="assets/icons/icons8-wind-80.png" alt="">
+                            <p>{{convertMpsToKph(currentWeatherData.wind.speed)}} Km/h</p>
+                        </div>
+                    </div>
+
+                    <div class="humidity box">
+                        <p>Humidity</p>
+                        <div class="data-box">
+                            <img src="assets/icons/icons8-humidity-80.png" alt="">
+                            <p>{{currentWeatherData.main.humidity}}%</p>
+                        </div>
+                    </div>
+                    <div class="real-feel box">
+                        <p>Feel Like</p>
+                        <div class="data-box">
+                            <img src="assets/icons/icons8-temperature-80.png" alt="">
+                            <p>{{convertToCelsius(currentWeatherData.main.feels_like)}}°C</p>
+                        </div>
+                    </div>
+
+                    <div class="visibility box">
+                        <p>Visibility</p>
+                        <div class="data-box">
+                            <img src="assets/icons/icons8-visibility-80.png" alt="">
+                            <p>{{convertMetersToKilometers(currentWeatherData.visibility)}} km</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
-</div>
+
+    </section>
 </section>
-
-
-
-<!-- <div class="card" *ngFor="let forecastDataHour of forecastDataHours">
-    <p>{{forecastDataHour.time}}</p>
-    <span class="material-symbols-outlined">rainy</span>
-    <p>{{convertToCelsius(forecastDataHour.temp)}}°C</p>
-</div> -->
