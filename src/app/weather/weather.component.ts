@@ -1,29 +1,219 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../service/weather.service';
-import { format } from 'date-fns';
-import { enUS, es } from 'date-fns/locale';
-import { debounceTime } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs';
+
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.css']
 })
-export class WeatherComponent implements OnInit{
-  
-  constructor( private apiService: WeatherService, private http: HttpClient) {}
+export class WeatherComponent implements OnInit {
+  currentWeatherData: any; // Acceder al endpoint Current de la API
+  forecastData: any; // Acceder al endpoint Forecast de la API
+  // Coordenadas actuales
+  latitude!: number
+  longitude!: number;
 
-  ngOnInit(): void {}
+  control = new FormControl();
+  cities: any[] = [];
+  showCitiesList: boolean = true;
+  city!:string
+
+ // Acceder a la hora actual 
+  currentTime = new Date();
+  currentHour: any
+  currentMinute:any
+  today:any
+
+
+  //Acceder al dia 
+  getToday(): string {
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+  
+    return `${month}/${day}/${year}`;
+  }
+  
+
+  getCurrentTime(): string {
+    const currentTime = new Date();
+    let currentHour = currentTime.getHours();
+    const currentMinute = currentTime.getMinutes();
+    let period = 'AM';
+  
+    if (currentHour >= 12) {
+      period = 'PM';
+      if (currentHour > 12) {
+        currentHour -= 12;
+      }
+    }
+  
+    return `${currentHour}:${currentMinute} ${period}`;
+  }
+  
+  
+  
+   
+
+
+  
+
+  constructor(
+    private weatherService: WeatherService,
+    private http: HttpClient,
+  ) {}
+
+
+  ngOnInit(): void {
+    console.log(this.getToday());
+    
+
+    this.getCurrentWeather();
+    this.getForecast(this.weatherService.city);
+    this.observerChangeSearch();
+  }
+
+  
+
+  getLocation(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude
+        this.longitude = position.coords.longitude
+        console.log('Ubicación actual:', this.latitude ,this.longitude );
+        this.getCurrentWeatherByCord()
+      }, (error) => {
+        console.error('Error al obtener la ubicación:', error);
+      });
+    } else {
+      console.error('Geolocalización no soportada por el navegador.');
+    }
+  }
+
+  getCurrentWeatherByCord(): void {
+    this.weatherService.currentWeatherByCord(this.latitude, this.longitude).subscribe(
+      (data: any) => {
+        this.currentWeatherData = data
+        console.log(this.currentWeatherData);
+      }
+    )
+  }
+
+  getCurrentWeather(): void {
+    this.weatherService.currentWeather(this.weatherService.city).subscribe(
+      (data: any) => {
+        this.currentWeatherData = data;
+        console.log(this.currentWeatherData);
+
+        if (data.visibility) {
+          console.log('Visibilidad:', data.visibility);
+        } else {
+          console.log('No se encontró información de visibilidad.');
+        }
+        
+      },
+      (error: any) => {
+        console.error('Error al obtener el clima actual:', error);
+      }
+    );
+  }
+
+  getForecast(city: string): void {
+    this.weatherService.forecast(city)
+      .subscribe(
+        (data: any) => {
+          this.forecastData = data; // Asignamos los datos del pronóstico a la variable
+          // Aquí puedes realizar cualquier acción adicional con los datos del pronóstico
+          console.log(this.forecastData);
+          
+        },
+        (error: any) => {
+          console.error('Error al obtener el pronóstico:', error);
+        }
+      );
+  }
+
+
+  parseUnixTimeToHour(unixTime: number): string {
+    const date = new Date(unixTime * 1000);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+    let formattedHours = hours % 12;
+    formattedHours = formattedHours ? formattedHours : 12; // Si formattedHours es 0, se cambia a 12
+  
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes.toString();
+  
+    return formattedHours + ':' + formattedMinutes + ' ' + ampm;
+  }
+  
+    // CONVERTIR DE KELVIN A CELSIUS
+    convertToCelsius(tempKelvin: number): number {
+      const tempCelsius = tempKelvin - 273.15;
+      const roundedTemp = parseFloat(tempCelsius.toFixed(1));
+      return roundedTemp;
+    }
+    
+
+  // CONVERTIR DE KELVIN A FAHRENHEIT
+  convertToFahrenheit(tempKelvin: number): number {
+    return Math.floor((tempKelvin - 273.15) * (9/5) + 32);
+  }
+
+  // Convertir de metos por segundo a kilometros por hora
+  convertMpsToKph(windSpeedMps: number): string {
+    const windSpeedKph = windSpeedMps * 3.6; // Velocidad del viento en kilómetros por hora
+    const roundedSpeed = windSpeedKph.toFixed(1); // Redondear a un decimal
+    return roundedSpeed;
+  }
+  
+  convertMetersToKilometers(meters: number): number {
+    const kilometers = meters / 1000;
+    return Math.round(kilometers * 10) / 10;
+  }
+
+
+  observerChangeSearch() {
+    this.control.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe(query => {
+        console.log(query);
+      
+
+      if (query && query.trim().length > 0) {
+        this.weatherService.geo(query).subscribe(result => {
+          if (Array.isArray(result)) {
+            this.cities = result;
+            this.showCitiesList = true;
+            console.log(this.cities);
+            
+            //not result
+          } else {
+            this.cities = [];
+            this.showCitiesList = false;
+          }
+          
+        });
+      } else {
+        this.cities = [];
+        this.showCitiesList = false;
+      }
+
+    });
+  }
+  
+
+  
+  
 
 
 }
-
-
-
-
-
 
 
 

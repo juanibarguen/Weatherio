@@ -106,6 +106,23 @@
 .current-date p {
     padding: 10px 0;
 }
+
+.current-data-today, .current-data-date {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.current-data-today img, .current-data-date img {
+    width: 20px;
+    height: 20px;
+}
+
+.current-data-today p, .current-data-date p {
+    font-size: 14px;
+}
+
+
 .container-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
