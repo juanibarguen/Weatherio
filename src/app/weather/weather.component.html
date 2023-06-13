@@ -7,12 +7,12 @@
                   <span class="material-symbols-outlined">search</span>
                     <input [formControl]="control" type="text" placeholder="Search city.." autocomplete="off">
                 </div>
-                <ul *ngIf="cities.length !== 0" class="container-list">
-                    <li class="item-result" *ngFor="let item of cities">
+                <ul *ngIf="showCitiesList" class="container-list" >
+                    <li class="item-result" *ngFor="let item of cities" (click)="updateWeatherData(item.name)">
                         <span class="material-symbols-outlined">pin_drop</span>
                         <div class="result-texts">
                             <p>{{item.name}}</p>
-                            <p>{{item.state}}, {{item.country}}</p>
+                            <p *ngIf="item.state">{{item.state}},</p><p>{{item.state}}, {{item.country}}</p>
                         </div>
                     </li>
                 </ul>
