@@ -8,7 +8,7 @@
                     <input [formControl]="control" type="text" placeholder="Search city.." autocomplete="off">
                 </div>
                 <ul *ngIf="showCitiesList" class="container-list" >
-                    <li class="item-result" *ngFor="let item of cities" (click)="updateWeatherData(item.name)">
+                    <li class="item-result" *ngFor="let item of cities" (click)="updateWeatherData(item.name,item.lat,item.lon)">
                         <span class="material-symbols-outlined">pin_drop</span>
                         <div class="result-texts">
                             <p>{{item.name}}</p>
