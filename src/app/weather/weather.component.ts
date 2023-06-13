@@ -50,7 +50,6 @@ selectedTemperature: string = 'C'; // Valor inicial en Celsius
       this.observerChangeSearch();
     }
 
-
     // Función para cambiar el estado de temperatura seleccionado
 toggleTemperature(temperature: string): void {
   this.selectedTemperature = temperature;
