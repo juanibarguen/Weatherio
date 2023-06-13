@@ -323,6 +323,7 @@
     .left {
         width: 100%;
         border-radius: 20px  20px 00px 0px;
+        padding: 20px 10px;
     }
 
     .container-home{
@@ -332,6 +333,7 @@
     .right {
         border-radius: 0 0 10px 10px;
         margin-bottom: 20px;
+        padding: 20px 10px;
     }
 
     .navbar-current-location{
@@ -342,4 +344,6 @@
     .current-location-data {
         display: flex;
     }
+
+
 }
