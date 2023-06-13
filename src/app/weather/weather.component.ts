@@ -4,14 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 
-
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent implements OnInit {
-
 
   list:boolean = true;
 
@@ -57,16 +55,16 @@ export class WeatherComponent implements OnInit {
       this.getCurrentWeather();
       this.getForecast(this.weatherService.city);
       this.observerChangeSearch();
+      
     }
 
-
-// Función para cambiar el estado de temperatura seleccionado
-toggleTemperature(temperature: string): void {
+  // Función para cambiar el estado de temperatura seleccionado
+  toggleTemperature(temperature: string): void {
   this.selectedTemperature = temperature;
-}
+  }
 
-// Función para obtener el nombre del día de la semana en inglés
-getDayOfWeek(date: string): string {
+  // Función para obtener el nombre del día de la semana en inglés
+  getDayOfWeek(date: string): string {
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const parts = date.split('-');
   const year = parseInt(parts[0]);
@@ -76,8 +74,7 @@ getDayOfWeek(date: string): string {
   const dayOfWeekIndex = new Date(year, month, day).getDay();
 
   return daysOfWeek[dayOfWeekIndex];
-}
-
+} 
 
   //Acceder a datos al dia 
   getToday(): string {
@@ -252,7 +249,6 @@ getDayOfWeek(date: string): string {
     this.showCitiesList = false;
   }
 
-
   getForecast(city: string): void {
     this.weatherService.forecast(city).subscribe(
       (data: any) => {
@@ -347,7 +343,6 @@ getDayOfWeek(date: string): string {
         return 'assets/icons/default.png';
     }
   }
-  
 
   parseUnixTimeToHour(unixTime: number): string {
     const date = new Date(unixTime * 1000);
@@ -362,8 +357,8 @@ getDayOfWeek(date: string): string {
   
     return formattedHours + ':' + formattedMinutes + ' ' + ampm;
   }
-  
-    // CONVERTIR DE KELVIN A CELSIUS
+
+  // CONVERTIR DE KELVIN A CELSIUS
   convertToCelsius(tempKelvin: number): number {
       const tempCelsius = tempKelvin - 273.15;
       const roundedTemp = parseFloat(tempCelsius.toFixed(1));
