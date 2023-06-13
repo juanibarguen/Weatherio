@@ -327,6 +327,7 @@ getDayOfWeek(date: string): string {
     });
   }
 }
+<<<<<<< HEAD
 
 
 
@@ -597,3 +598,6 @@ getDayOfWeek(date: string): string {
 //   }
   
 // }
+=======
+  
+>>>>>>> 97bb8d0 (testing)
