@@ -50,6 +50,7 @@ selectedTemperature: string = 'C'; // Valor inicial en Celsius
       this.observerChangeSearch();
     }
 
+
     // Función para cambiar el estado de temperatura seleccionado
 toggleTemperature(temperature: string): void {
   this.selectedTemperature = temperature;
@@ -221,7 +222,6 @@ getDayOfWeek(date: string): string {
             }
           }
         }
-  
         console.log(this.forecastDays);
       },
       (error: any) => {
@@ -326,7 +326,6 @@ getDayOfWeek(date: string): string {
     });
   }
 }
-<<<<<<< HEAD
 
 
 
@@ -597,6 +596,3 @@ getDayOfWeek(date: string): string {
 //   }
   
 // }
-=======
-  
->>>>>>> 97bb8d0 (testing)
