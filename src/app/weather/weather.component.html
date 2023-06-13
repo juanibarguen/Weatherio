@@ -3,15 +3,25 @@
 
         <div class="left">
             <div class="input-search">
-                <span class="material-symbols-outlined">search</span>
-                <input [formControl]="control" type="text" placeholder="Search city.." autocomplete="off">
-
+                <div class="container-input">
+                  <span class="material-symbols-outlined">search</span>
+                    <input [formControl]="control" type="text" placeholder="Search city.." autocomplete="off">
+                </div>
+                <ul *ngIf="cities.length !== 0" class="container-list">
+                    <li class="item-result" *ngFor="let item of cities">
+                        <span class="material-symbols-outlined">pin_drop</span>
+                        <div class="result-texts">
+                            <p>{{item.name}}</p>
+                            <p>{{item.state}}, {{item.country}}</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
     
             <div class="current-temp"  *ngIf="currentWeatherData">
                 <img src="assets/icons/icons8-haze-80.png" alt="">
                 <p *ngIf="selectedTemperature === 'C'">{{convertToCelsius(currentWeatherData.main.temp)}}°C</p>
-                <p *ngIf="selectedTemperature === 'F'">{{convertToCelsius(currentWeatherData.main.temp)}}°F</p>
+                <p *ngIf="selectedTemperature === 'F'">{{convertToFahrenheit(currentWeatherData.main.temp)}}°F</p>
                 
             </div>
 
@@ -104,7 +114,7 @@
                         <p>Sunrise</p>
                         <div class="data-box">
                             <img src="assets/icons/icons8-sunrise-80.png" alt="">
-                            <p>{{parseUnixTimeToHour(currentWeatherData.sys.sunrise)}}</p>
+                            <p class="data-box-text">{{parseUnixTimeToHour(currentWeatherData.sys.sunrise)}}</p>
                         </div>
                     </div>
 
@@ -112,7 +122,7 @@
                         <p>Sunset</p>
                         <div class="data-box">
                             <img src="assets/icons/icons8-sunset-80.png" alt="">
-                            <p>{{parseUnixTimeToHour(currentWeatherData.sys.sunset)}}</p>
+                            <p class="data-box-text">{{parseUnixTimeToHour(currentWeatherData.sys.sunset)}}</p>
                         </div>
                     </div>
 
@@ -120,7 +130,7 @@
                         <p>Wind Status</p>
                         <div class="data-box">
                             <img src="assets/icons/icons8-wind-80.png" alt="">
-                            <p>{{convertMpsToKph(currentWeatherData.wind.speed)}} Km/h</p>
+                            <p class="data-box-text">{{convertMpsToKph(currentWeatherData.wind.speed)}} Km/h</p>
                         </div>
                     </div>
 
@@ -128,15 +138,15 @@
                         <p>Humidity</p>
                         <div class="data-box">
                             <img src="assets/icons/icons8-humidity-80.png" alt="">
-                            <p>{{currentWeatherData.main.humidity}}%</p>
+                            <p class="data-box-text">{{currentWeatherData.main.humidity}}%</p>
                         </div>
                     </div>
                     <div class="real-feel box">
                         <p>Feel Like</p>
                         <div class="data-box">
                             <img src="assets/icons/icons8-temperature-80.png" alt="">
-                            <p *ngIf="selectedTemperature === 'C'">{{convertToCelsius(currentWeatherData.main.feels_like)}}°C</p>
-                            <p *ngIf="selectedTemperature === 'F'">{{convertToFahrenheit(currentWeatherData.main.feels_like)}}°F</p>
+                            <p class="data-box-text" *ngIf="selectedTemperature === 'C'">{{convertToCelsius(currentWeatherData.main.feels_like)}}°C</p>
+                            <p class="data-box-text" *ngIf="selectedTemperature === 'F'">{{convertToFahrenheit(currentWeatherData.main.feels_like)}}°F</p>
                         </div>
                     </div>
 
@@ -144,7 +154,7 @@
                         <p>Visibility</p>
                         <div class="data-box">
                             <img src="assets/icons/icons8-visibility-80.png" alt="">
-                            <p>{{convertMetersToKilometers(currentWeatherData.visibility)}} km</p>
+                            <p class="data-box-text">{{convertMetersToKilometers(currentWeatherData.visibility)}} km</p>
                         </div>
                     </div>
                 </div>
