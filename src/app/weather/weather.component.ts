@@ -138,18 +138,8 @@ getDayOfWeek(date: string): string {
     );
   }
 
-  updateWeatherData(cityName: string) {
-    console.log("Ciudad seleccionada: "+cityName);
-    
-    this.weatherService.city = cityName; // Actualiza el valor de la ciudad en el servicio
-    this.getForecast(cityName)
-    this.getCurrentWeather(); // Llama al método para obtener los datos actualizados
-    this.showCitiesList = false;
-  }
-
-
-  getForecast(city: string): void {
-    this.weatherService.forecast(city).subscribe(
+  forecastByCord(): void {
+    this.weatherService.forecastByCord(this.latitude, this.longitude).subscribe(
       (data: any) => {
         this.forecastData = data;
         console.log(this.forecastData);
@@ -245,6 +235,89 @@ getDayOfWeek(date: string): string {
       }
     );
   }
+
+  updateWeatherData(cityName:string,lat: number,lon:number,) {
+    console.log("Ciudad seleccionada: "+cityName);
+    
+    this.latitude = lat; // Actualiza el valor de la latitud en la clase
+    this.longitude = lon; /// Actualiza el valor de la longitud en la clase
+    this.getCurrentWeatherByCord() 
+
+    this.weatherService.city = cityName; // Actualiza el valor de la ciudad en el servicio
+
+
+    this.getForecast(cityName) // Llama al metodo con el nombre actualizado
+    // Llama al pronostico con los valores lat y lon ya actualizados
+    this.getCurrentWeather(); // Llama al método para obtener los datos actualizados
+    this.showCitiesList = false;
+  }
+
+
+  getForecast(city: string): void {
+    this.weatherService.forecast(city).subscribe(
+      (data: any) => {
+        this.forecastData = data;
+        console.log(this.forecastData);
+  
+        this.forecastTimes = []; // Reiniciar el arreglo de pronósticos
+        this.forecastDays = []; // Reiniciar el arreglo de pronósticos
+  
+        for (let i = 0; i < 7; i++) {
+          const dateTemp = this.forecastData.list[i].main.temp;
+          const dateTime = this.forecastData.list[i].dt_txt;
+          const dateDescrip = this.forecastData.list[i].weather[0].description;
+          const time = dateTime.split(" ")[1];
+          const hourAndMinute = time.substring(0, 5);
+  
+          let imgDescription: string; // Variable para almacenar la ruta de la imagen
+  
+            
+
+  
+          const forecastItem = {
+            time: hourAndMinute,
+            main: dateDescrip,
+            temp: dateTemp,
+            imgDescription: this.getImageDescription(dateDescrip)
+          };
+  
+          this.forecastTimes.push(forecastItem);
+        }
+  
+        console.log(this.forecastTimes);
+        // Actualizar el arreglo forecastDays para los 5 días
+        for (let i = 0; i < this.forecastData.list.length; i++) {
+          const forecastItem = this.forecastData.list[i];
+          const dateTime = forecastItem.dt_txt;
+          const date = new Date(dateTime); // Convertir la fecha y hora en un objeto de tipo Date
+          const day = date.getDate();
+          const month = date.getMonth() + 1;
+          const year = date.getFullYear();
+          const hours = date.getHours();
+          const minutes = date.getMinutes();
+  
+          if (hours === 12 && minutes === 0) {
+            const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            const dateTemp = forecastItem.main.temp;
+            const dateDescrip = forecastItem.weather[0].description;
+            const imgDescription = this.getImageDescription(dateDescrip);
+  
+            // Verificar si el día ya existe en el arreglo forecastDays
+            const existingDay = this.forecastDays.find(day => day.date === formattedDate);
+            if (existingDay) {
+              existingDay.temperatures.push(dateTemp);
+            } else {
+              this.forecastDays.push({ date: formattedDate, description: dateDescrip, temperatures: [dateTemp], imgDescription });
+            }
+          }
+        }
+        console.log(this.forecastDays);
+      },
+      (error: any) => {
+        console.error('Error al obtener el pronóstico:', error);
+      }
+    );
+  }
   
   getImageDescription(description: string): string {
     switch (description) {
@@ -257,6 +330,7 @@ getDayOfWeek(date: string): string {
         return 'assets/icons/icons8-clouds-80.png';
       case 'drizzle':
       case 'light rain':
+        case 'moderate rain':
         return 'assets/icons/icons8-drizzle-80.png';
       case 'rain':
         return 'assets/icons/icons8-rain-80.png';

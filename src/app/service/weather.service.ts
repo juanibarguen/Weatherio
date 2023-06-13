@@ -28,6 +28,9 @@ export class WeatherService {
     return this.http.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey2}`)
   }
 
+  forecastByCord(lat:number, lon:number): Observable<any> {
+    return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey2}`);
+  }
 
   forecast(city:string): Observable<any> {
     return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey2}`);
