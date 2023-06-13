@@ -8,9 +8,11 @@
 
             </div>
     
-            <div class="current-temp">
+            <div class="current-temp"  *ngIf="currentWeatherData">
                 <img src="assets/icons/icons8-haze-80.png" alt="">
-                <p *ngIf="currentWeatherData">{{convertToCelsius(currentWeatherData.main.temp)}}°C</p>
+                <p *ngIf="selectedTemperature === 'C'">{{convertToCelsius(currentWeatherData.main.temp)}}°C</p>
+                <p *ngIf="selectedTemperature === 'F'">{{convertToCelsius(currentWeatherData.main.temp)}}°F</p>
+                
             </div>
 
             <div class="current-date">
@@ -76,7 +78,8 @@
                 <div class="card" *ngFor="let item of forecastTimes">
                   <p>{{ item.time }}</p>
                   <img [src]="item.imgDescription">
-                  <p>{{ convertToCelsius(item.temp) }}°C</p>
+                  <p *ngIf="selectedTemperature === 'C'">{{ convertToCelsius(item.temp) }}°C</p>
+                  <p *ngIf="selectedTemperature === 'F'">{{ convertToFahrenheit(item.temp) }}°F</p>
                 </div>
               </div>
               
@@ -85,7 +88,8 @@
                   <p>{{ getDayOfWeek(day.date) }}</p>
                   <img [src]="day.imgDescription">
                   <div *ngFor="let temperature of day.temperatures">
-                    <p>{{ convertToCelsius(temperature) }}°C</p>
+                    <p *ngIf="selectedTemperature === 'C'">{{ convertToCelsius(temperature) }}°C</p>
+                    <p *ngIf="selectedTemperature === 'F'">{{ convertToFahrenheit(temperature) }}°F</p>
                   </div>
                 </div>
               </div>
@@ -131,7 +135,8 @@
                         <p>Feel Like</p>
                         <div class="data-box">
                             <img src="assets/icons/icons8-temperature-80.png" alt="">
-                            <p>{{convertToCelsius(currentWeatherData.main.feels_like)}}°C</p>
+                            <p *ngIf="selectedTemperature === 'C'">{{convertToCelsius(currentWeatherData.main.feels_like)}}°C</p>
+                            <p *ngIf="selectedTemperature === 'F'">{{convertToFahrenheit(currentWeatherData.main.feels_like)}}°F</p>
                         </div>
                     </div>
 

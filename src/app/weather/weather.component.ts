@@ -18,24 +18,28 @@ export class WeatherComponent implements OnInit {
   latitude!: number
   longitude!: number;
 
+  // Creamos instancia de FormControl, arrays para almacenar la lista de ciudades relacionadas con lo escrito en el input
   control = new FormControl();
   cities: any[] = [];
   showCitiesList: boolean = true;
   city!:string
 
- // Acceder a la hora actual 
+ // Almacenan datos sobre a la hora actual 
   currentTime = new Date();
   currentHour: any
   currentMinute:any
   today:any
 
+  // Array que almacena el pronostico de las proximas 8 horas
   forecastTimes: any[] = [];
+  // Array que almacena el pronostico de los proximos 5 dias
   forecastDays: any[] = [];
 
-  activeTab: string = "today";
+  // Variable que activa
+  activeTab: string = "";
 
   // Variable para realizar el seguimiento del estado de temperatura seleccionado
-selectedTemperature: string = 'C'; // Valor inicial en Celsius
+  selectedTemperature: string = 'C'; // Valor inicial en Celsius
   
   constructor(
     private weatherService: WeatherService,
@@ -43,6 +47,7 @@ selectedTemperature: string = 'C'; // Valor inicial en Celsius
     ) {}
     
     ngOnInit(): void {
+      // Valor default
       this.activeTab = "today";
 
       this.getCurrentWeather();
@@ -51,7 +56,7 @@ selectedTemperature: string = 'C'; // Valor inicial en Celsius
     }
 
 
-    // Función para cambiar el estado de temperatura seleccionado
+// Función para cambiar el estado de temperatura seleccionado
 toggleTemperature(temperature: string): void {
   this.selectedTemperature = temperature;
 }
@@ -70,13 +75,12 @@ getDayOfWeek(date: string): string {
 }
 
 
-    //Acceder al dia 
+  //Acceder a datos del al dia 
   getToday(): string {
       const currentDate = new Date();
       const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
       const day = currentDate.getDate().toString().padStart(2, '0');
       const year = currentDate.getFullYear().toString();
-    
       return `${month}/${day}/${year}`;
   }
     
