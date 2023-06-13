@@ -17,7 +17,7 @@ export class WeatherService {
   city: string
 
   constructor(private http: HttpClient) {
-    this.city = 'lONDON';
+    this.city = 'Buenos aires';
    }
 
   currentWeather(city: string): Observable<any> {

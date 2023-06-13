@@ -11,6 +11,10 @@ import { debounceTime } from 'rxjs';
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent implements OnInit {
+
+
+  list:boolean = true;
+
   currentWeatherData: any; // Acceder al endpoint Current de la API
   forecastData: any; // Acceder al endpoint Forecast de la API
 
@@ -75,7 +79,7 @@ getDayOfWeek(date: string): string {
 }
 
 
-  //Acceder a datos del al dia 
+  //Acceder a datos al dia 
   getToday(): string {
       const currentDate = new Date();
       const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
