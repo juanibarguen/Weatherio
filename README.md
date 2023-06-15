@@ -4,4 +4,4 @@ Weatherio es una aplicación de clima que desarrollé como proyecto personal. Es
 
 Desarrollo principal: [Angular](https://github.com/angular/angular-cli) versión 15.2.4.
 
-API: OpenWeather (https://openweathermap.org/)
+API: [OpenWeather](https://openweathermap.org/)
