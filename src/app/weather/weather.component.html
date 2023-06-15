@@ -12,7 +12,8 @@
                         <span class="material-symbols-outlined">pin_drop</span>
                         <div class="result-texts">
                             <p>{{item.name}}</p>
-                            <p *ngIf="item.state">{{item.state}},</p><p>{{item.state}}, {{item.country}}</p>
+                            <p *ngIf="item.state">{{item.state}},</p>
+                            <p>{{item.state}}, {{item.country}}</p>
                         </div>
                     </li>
                 </ul>
@@ -47,7 +48,6 @@
 
             <div class="left-bottom">
 
-    
                 <button class="navbar-current-location">
                     <span class="material-symbols-outlined">my_location</span>
                     <p (click)="getLocation()">Current Location</p>
@@ -55,10 +55,8 @@
     
                 <div class="current-location">
                     <img src="assets/icons/icons8-location-80.png" alt="">
-                    <!-- <img [src]="item.imgDescription"> -->
                     <div *ngIf="currentWeatherData" class="current-location-data">
-                        <p>{{currentWeatherData.name}},</p>
-
+                        <p>{{currentWeatherData.name}}</p>
                         <p>{{currentWeatherData.sys.country}}</p>
                     </div>
                 </div>
@@ -81,7 +79,6 @@
                     <!-- <div class="mode"><span class="material-symbols-outlined lm">light_mode</span></div> -->
                   </div>
                     
-                
             </div>
 
             <div class="container-card" *ngIf="activeTab === 'today'">
