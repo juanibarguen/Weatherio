@@ -52,7 +52,7 @@ export class WeatherComponent implements OnInit {
     
     ngOnInit(): void {
       // Valor default
-      this.activeTab = "today";
+      this.activeTab = "week";
 
       this.getCurrentWeather();
       this.getForecast(this.weatherService.city);
