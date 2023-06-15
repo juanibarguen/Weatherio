@@ -19,7 +19,7 @@
             </div>
     
             <div class="current-temp"  *ngIf="currentWeatherData">
-                <img src="assets/icons/icons8-haze-80.png" alt="">
+                <img [src]="imgCurrentWeather">
                 <p *ngIf="selectedTemperature === 'C'">{{convertToCelsius(currentWeatherData.main.temp)}}°C</p>
                 <p *ngIf="selectedTemperature === 'F'">{{convertToFahrenheit(currentWeatherData.main.temp)}}°F</p>
                 
@@ -78,7 +78,7 @@
                   <div class="temp-select">
                     <button [ngClass]="{ 'celcius': selectedTemperature === 'C' }" (click)="toggleTemperature('C')">C</button>
                     <button [ngClass]="{ 'farenheit': selectedTemperature === 'F' }" (click)="toggleTemperature('F')">F</button>
-                    <div class="mode"><span class="material-symbols-outlined lm">light_mode</span></div>
+                    <!-- <div class="mode"><span class="material-symbols-outlined lm">light_mode</span></div> -->
                   </div>
                     
                 
