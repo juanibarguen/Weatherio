@@ -11,6 +11,8 @@ import { debounceTime } from 'rxjs';
 })
 export class WeatherComponent implements OnInit {
 
+  imgCurrentWeather: string = ""
+
   list:boolean = true;
 
   currentWeatherData: any; // Acceder al endpoint Current de la API
@@ -128,6 +130,10 @@ export class WeatherComponent implements OnInit {
       (data: any) => {
         this.currentWeatherData = data;
         console.log(this.currentWeatherData);
+
+        const imgDescrip = data.weather[0].description
+        this.imgCurrentWeather = this.getImageDescription(imgDescrip)
+        
       },
       (error: any) => {
         console.error('Error al obtener el clima actual:', error);
@@ -330,6 +336,8 @@ export class WeatherComponent implements OnInit {
         return 'assets/icons/icons8-drizzle-80.png';
       case 'rain':
         return 'assets/icons/icons8-rain-80.png';
+      case 'light snow':
+        return 'assets/icons/icons8-snow-80.png';
       case 'shower rain':
         return 'assets/icons/icons8-heavy-rain-80.png';
       case 'thunderstorm':
