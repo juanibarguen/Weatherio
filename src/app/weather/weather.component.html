@@ -23,7 +23,6 @@
                 <img [src]="imgCurrentWeather">
                 <p *ngIf="selectedTemperature === 'C'">{{convertToCelsius(currentWeatherData.main.temp)}}°C</p>
                 <p *ngIf="selectedTemperature === 'F'">{{convertToFahrenheit(currentWeatherData.main.temp)}}°F</p>
-                
             </div>
 
             <div class="current-date">
@@ -35,7 +34,6 @@
                     <img src="assets/icons/icons8-date-80.png" alt="">
                     <p>{{getToday()}}</p>
                 </div>
-
             </div>
 
             <div class="current-description">
@@ -43,7 +41,6 @@
                 <p *ngIf="currentWeatherData">{{currentWeatherData.weather[0].description}}</p>
             </div>
 
-            
             <hr>
 
             <div class="left-bottom">
@@ -70,14 +67,12 @@
                 <div class="data-select">
                     <button class="today" [ngClass]="{'active': activeTab === 'today'}" (click)="activeTab = 'today'">Today</button>
                     <button class="week" [ngClass]="{'active': activeTab === 'week'}" (click)="activeTab = 'week'">Week</button>
-                  </div>
-                  
-
-                  <div class="temp-select">
-                    <button [ngClass]="{ 'celcius': selectedTemperature === 'C' }" (click)="toggleTemperature('C')">C</button>
-                    <button [ngClass]="{ 'farenheit': selectedTemperature === 'F' }" (click)="toggleTemperature('F')">F</button>
+                </div>
+                <div class="temp-select">
+                  <button [ngClass]="{ 'celcius': selectedTemperature === 'C' }" (click)="toggleTemperature('C')">C</button>
+                  <button [ngClass]="{ 'farenheit': selectedTemperature === 'F' }" (click)="toggleTemperature('F')">F</button>
                     <!-- <div class="mode"><span class="material-symbols-outlined lm">light_mode</span></div> -->
-                  </div>
+                </div>
                     
             </div>
 
