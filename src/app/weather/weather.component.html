@@ -1,5 +1,5 @@
 <section class="container-home">   
-        <section class="home">
+        <section class="home" *ngIf="loadingData === false" >
 
         <div class="left">
             <div class="input-search">
@@ -20,9 +20,6 @@
             </div>
     
             <div class="current-temp"  *ngIf="currentWeatherData">
-                <div *ngIf="loadingData">
-                    <H3>SPINNER</H3>
-                  </div>
                 <img [src]="imgCurrentWeather">
                 <p *ngIf="selectedTemperature === 'C'">{{convertToCelsius(currentWeatherData.main.temp)}}°C</p>
                 <p *ngIf="selectedTemperature === 'F'">{{convertToFahrenheit(currentWeatherData.main.temp)}}°F</p>
@@ -158,6 +155,17 @@
         </div>
 
 
+
+    </section>
+
+    <section *ngIf="loadingData === true" class="loading-data">
+        <div class="loading-container">
+            <div class="loading-spinenr">
+                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+            <div class="loading-text">
+                <p>Loading data...</p>
+            </div>
+        </div>
 
     </section>
 </section>
