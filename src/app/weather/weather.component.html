@@ -20,6 +20,9 @@
             </div>
     
             <div class="current-temp"  *ngIf="currentWeatherData">
+                <div *ngIf="loadingData">
+                    <H3>SPINNER</H3>
+                  </div>
                 <img [src]="imgCurrentWeather">
                 <p *ngIf="selectedTemperature === 'C'">{{convertToCelsius(currentWeatherData.main.temp)}}°C</p>
                 <p *ngIf="selectedTemperature === 'F'">{{convertToFahrenheit(currentWeatherData.main.temp)}}°F</p>
