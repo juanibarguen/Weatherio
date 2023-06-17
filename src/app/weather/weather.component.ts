@@ -11,6 +11,9 @@ import { debounceTime } from 'rxjs';
 })
 export class WeatherComponent implements OnInit {
 
+  loadingData: boolean = false;
+
+
   imgCurrentWeather: string = ""
 
   list:boolean = true;
@@ -97,12 +100,16 @@ export class WeatherComponent implements OnInit {
   }
 
   getLocation(): void {
+    this.loadingData = true;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude
         this.longitude = position.coords.longitude
         console.log('Ubicación actual:', this.latitude ,this.longitude );
         this.getCurrentWeatherByCord()
+        this.loadingData = false;
+        // Asignar los datos recibidos a la variable correspondiente
+
       }, (error) => {
         console.error('Error al obtener la ubicación:', error);
       });
@@ -126,6 +133,7 @@ export class WeatherComponent implements OnInit {
   }
 
   getCurrentWeather(): void {
+    this.loadingData = true;
     this.weatherService.currentWeather(this.weatherService.city).subscribe(
       (data: any) => {
         this.currentWeatherData = data;
@@ -133,7 +141,7 @@ export class WeatherComponent implements OnInit {
 
         const imgDescrip = data.weather[0].description
         this.imgCurrentWeather = this.getImageDescription(imgDescrip)
-        
+        this.loadingData = false;
       },
       (error: any) => {
         console.error('Error al obtener el clima actual:', error);
