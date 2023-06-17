@@ -1,5 +1,7 @@
 <section class="container-home">   
-        <section class="home" *ngIf="loadingData === false" >
+    
+    <section class="home" [ngClass]="{ 'ng-hide': loadingData }" *ngIf="!loadingData">
+
 
         <div class="left">
             <div class="input-search">
@@ -158,7 +160,7 @@
 
     </section>
 
-    <section *ngIf="loadingData === true" class="loading-data">
+    <section class="loading-data" [ngClass]="{ 'ng-hide': !loadingData }" *ngIf="loadingData">
         <div class="loading-container">
             <div class="loading-spinenr">
                 <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>

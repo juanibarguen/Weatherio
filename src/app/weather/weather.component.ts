@@ -4,13 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 
+
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent implements OnInit {
-
   loadingData: boolean = true;
 
 
@@ -56,6 +56,10 @@ export class WeatherComponent implements OnInit {
     ngOnInit(): void {
       // Valor default
       this.activeTab = "week";
+
+      // Establecemos la variable en true para que muestre los datos una vez que ya esten cargados
+      this.loadingData = true;
+
 
       this.getCurrentWeather();
       this.getForecast(this.weatherService.city);
@@ -107,8 +111,8 @@ export class WeatherComponent implements OnInit {
         this.longitude = position.coords.longitude
         console.log('Ubicación actual:', this.latitude ,this.longitude );
         this.getCurrentWeatherByCord()
+        // Establecer loadingData en false después de 1 segundos para asegurar que la informacion ya se cargó
         setTimeout(() => {
-          // Establecer loadingData en false después de 1 segundos
           this.loadingData = false;
         }, 1000);
       }, (error) => {
@@ -142,8 +146,8 @@ export class WeatherComponent implements OnInit {
 
         const imgDescrip = data.weather[0].description
         this.imgCurrentWeather = this.getImageDescription(imgDescrip)
+        // Establecer loadingData en false después de 1 segundos para asegurar que la informacion ya se cargó
         setTimeout(() => {
-          // Establecer loadingData en false después de 1 segundos
           this.loadingData = false;
         }, 1000);
       },
