@@ -11,7 +11,7 @@ import { debounceTime } from 'rxjs';
 })
 export class WeatherComponent implements OnInit {
 
-  loadingData: boolean = false;
+  loadingData: boolean = true;
 
 
   imgCurrentWeather: string = ""
@@ -107,9 +107,10 @@ export class WeatherComponent implements OnInit {
         this.longitude = position.coords.longitude
         console.log('Ubicación actual:', this.latitude ,this.longitude );
         this.getCurrentWeatherByCord()
-        this.loadingData = false;
-        // Asignar los datos recibidos a la variable correspondiente
-
+        setTimeout(() => {
+          // Establecer loadingData en false después de 1 segundos
+          this.loadingData = false;
+        }, 1000);
       }, (error) => {
         console.error('Error al obtener la ubicación:', error);
       });
@@ -141,7 +142,10 @@ export class WeatherComponent implements OnInit {
 
         const imgDescrip = data.weather[0].description
         this.imgCurrentWeather = this.getImageDescription(imgDescrip)
-        this.loadingData = false;
+        setTimeout(() => {
+          // Establecer loadingData en false después de 1 segundos
+          this.loadingData = false;
+        }, 1000);
       },
       (error: any) => {
         console.error('Error al obtener el clima actual:', error);
