@@ -13,6 +13,9 @@ import { debounceTime } from 'rxjs';
 export class WeatherComponent implements OnInit {
 
   loadingData: boolean = true;
+  
+  lightMode: boolean = false
+  darkMode: boolean = true;
 
   // variable que retorna la imagen del clima actual
   imgCurrentWeather: string = ""

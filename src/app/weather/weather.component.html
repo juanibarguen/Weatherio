@@ -1,7 +1,7 @@
 <section class="container-home">   
     
-    <section class="home" [ngClass]="{ 'ng-hide': loadingData }" *ngIf="!loadingData">
-        <div class="left">
+    <section class="home" [ngClass]="{ 'ng-hide': loadingData }" *ngIf="!loadingData" [ngClass]="{'home-dark-mode': darkMode}">
+        <div class="left" [ngClass]="{'left-dark-mode': darkMode}">
             <div class="input-search">
                 <div class="container-input">
                   <span class="material-symbols-outlined">search</span>
@@ -59,9 +59,9 @@
                 </div>
             </div>
         </div>
-        <div class="right">
+        <div class="right" [ngClass]="{'right-dark-mode': darkMode}">
 
-            <div class="right-navbar">
+            <div class="right-navbar" [ngClass]="{'right-navbar-dark-mode': darkMode}">
 
                 <div class="data-select">
                     <button class="today" [ngClass]="{'active': activeTab === 'today'}" (click)="activeTab = 'today'">Today</button>
@@ -70,13 +70,16 @@
                 <div class="temp-select">
                   <button [ngClass]="{ 'celcius': selectedTemperature === 'C' }" (click)="toggleTemperature('C')">C</button>
                   <button [ngClass]="{ 'farenheit': selectedTemperature === 'F' }" (click)="toggleTemperature('F')">F</button>
-                    <!-- <div class="mode"><span class="material-symbols-outlined lm">light_mode</span></div> -->
+                    <div class="mode">
+                        <span *ngIf="lightMode" class="material-symbols-outlined lm icon-light_mode">light_mode</span>
+                        <span *ngIf="darkMode" class="material-symbols-outlined icon-dark_mode">dark_mode</span>
+                    </div>
                 </div>
                     
             </div>
 
             <div class="container-card" *ngIf="activeTab === 'today'">
-                <div class="card" *ngFor="let item of forecastTimes">
+                <div class="card" *ngFor="let item of forecastTimes" [ngClass]="{'card-dark-mode': darkMode}">
                   <p>{{ item.time }}</p>
                   <img [src]="item.imgDescription">
                   <p *ngIf="selectedTemperature === 'C'">{{ convertToCelsius(item.temp) }}°C</p>
@@ -101,7 +104,7 @@
 
                 <div *ngIf="currentWeatherData" class="boxes">
 
-                    <div class="sunrise box">
+                    <div class="sunrise box" [ngClass]="{'-dark-mode': darkMode}">
                         <p>Sunrise</p>
                         <div class="data-box">
                             <img src="assets/icons/icons8-sunrise-80.png" alt="">
