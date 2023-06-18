@@ -483,3 +483,7 @@
 .input-dark-mode{
     background-color: #172031;
 }
+
+.container-card-dark-mode {
+    background-color: red;
+}
