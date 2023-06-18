@@ -1,8 +1,6 @@
 <section class="container-home">   
     
     <section class="home" [ngClass]="{ 'ng-hide': loadingData }" *ngIf="!loadingData">
-
-
         <div class="left">
             <div class="input-search">
                 <div class="container-input">
@@ -61,7 +59,6 @@
                 </div>
             </div>
         </div>
-
         <div class="right">
 
             <div class="right-navbar">
@@ -155,9 +152,6 @@
             </div>
 
         </div>
-
-
-
     </section>
 
     <section class="loading-data" [ngClass]="{ 'ng-hide': !loadingData }" *ngIf="loadingData">
@@ -168,6 +162,6 @@
                 <p>Loading data...</p>
             </div>
         </div>
-
     </section>
+
 </section>
