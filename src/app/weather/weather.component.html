@@ -70,16 +70,16 @@
                 <div class="temp-select">
                   <button [ngClass]="{ 'celcius': selectedTemperature === 'C' }" (click)="toggleTemperature('C')">C</button>
                   <button [ngClass]="{ 'farenheit': selectedTemperature === 'F' }" (click)="toggleTemperature('F')">F</button>
-                    <div class="mode">
-                        <span *ngIf="lightMode" class="material-symbols-outlined lm icon-light_mode">light_mode</span>
+                    <div class="mode" (click)="changeMode()">
+                        <!-- <span *ngIf="lightMode" class="material-symbols-outlined lm icon-light_mode">light_mode</span> -->
                         <span *ngIf="darkMode" class="material-symbols-outlined icon-dark_mode">dark_mode</span>
                     </div>
                 </div>
                     
             </div>
 
-            <div class="container-card" *ngIf="activeTab === 'today'">
-                <div class="card" *ngFor="let item of forecastTimes" [ngClass]="{'card-dark-mode': darkMode}">
+            <div class="container-card" *ngIf="activeTab === 'today'" >
+                <div class="card" *ngFor="let item of forecastTimes" >
                   <p>{{ item.time }}</p>
                   <img [src]="item.imgDescription">
                   <p *ngIf="selectedTemperature === 'C'">{{ convertToCelsius(item.temp) }}°C</p>

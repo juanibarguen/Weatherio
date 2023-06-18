@@ -13,9 +13,8 @@ import { debounceTime } from 'rxjs';
 export class WeatherComponent implements OnInit {
 
   loadingData: boolean = true;
-  
-  lightMode: boolean = false
-  darkMode: boolean = true;
+
+  darkMode: boolean = false;
 
   // variable que retorna la imagen del clima actual
   imgCurrentWeather: string = ""
@@ -58,7 +57,6 @@ export class WeatherComponent implements OnInit {
     ngOnInit(): void {
       // Valor default
       this.activeTab = "week";
-
       // Establecemos la variable en true para que muestre los datos una vez que ya esten cargados
       this.loadingData = true;
 
@@ -67,6 +65,14 @@ export class WeatherComponent implements OnInit {
       this.getForecast(this.weatherService.city);
       this.observerChangeSearch();
       
+    }
+
+    changeMode() {
+      if (this.darkMode) {
+        this.darkMode = false;
+      }else {
+        this.darkMode = true;
+      }
     }
 
   // Función para cambiar el estado de temperatura seleccionado
