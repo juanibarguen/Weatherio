@@ -469,3 +469,17 @@
       transform: translate(24px, 0);
     }
 }
+
+
+/* DARK MODE */
+
+.right-dark-mode {
+    background-color: #091120;
+}
+
+.left-dark-mode {
+    background-color: #172031;
+}
+.input-dark-mode{
+    background-color: #172031;
+}

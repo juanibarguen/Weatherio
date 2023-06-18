@@ -5,7 +5,7 @@
             <div class="input-search">
                 <div class="container-input">
                   <span class="material-symbols-outlined">search</span>
-                    <input [formControl]="control" type="text" placeholder="Search city.." autocomplete="off">
+                    <input [formControl]="control" type="text" placeholder="Search city.." autocomplete="off" [ngClass]="{'input-dark-mode': darkMode}">
                 </div>
                 <ul *ngIf="showCitiesList" class="container-list" >
                     <li class="item-result" *ngFor="let item of cities" (click)="updateWeatherData(item.name,item.lat,item.lon)">
