@@ -11,12 +11,11 @@ import { debounceTime } from 'rxjs';
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent implements OnInit {
+
   loadingData: boolean = true;
 
-
+  // variable que retorna la imagen del clima actual
   imgCurrentWeather: string = ""
-
-  list:boolean = true;
 
   currentWeatherData: any; // Acceder al endpoint Current de la API
   forecastData: any; // Acceder al endpoint Forecast de la API
@@ -60,7 +59,7 @@ export class WeatherComponent implements OnInit {
       // Establecemos la variable en true para que muestre los datos una vez que ya esten cargados
       this.loadingData = true;
 
-
+      // Ejecutamos las funciones al abrir la app
       this.getCurrentWeather();
       this.getForecast(this.weatherService.city);
       this.observerChangeSearch();
@@ -94,6 +93,7 @@ export class WeatherComponent implements OnInit {
       return `${month}/${day}/${year}`;
   }
     
+  // Obtenemos la hora actual
   getCurrentTime(): string {
       const currentTime = new Date();
       let currentHour = currentTime.getHours();
@@ -103,6 +103,7 @@ export class WeatherComponent implements OnInit {
       return `${currentHour}:${currentMinute}`;
   }
 
+  // Obtenemos la locacion actual
   getLocation(): void {
     this.loadingData = true;
     if (navigator.geolocation) {
@@ -123,6 +124,7 @@ export class WeatherComponent implements OnInit {
     }
   }
 
+  // Obtenemos el clima actual por coordenadas
   getCurrentWeatherByCord(): void {
     this.weatherService.currentWeatherByCord(this.latitude, this.longitude).subscribe(
       (data: any) => {
@@ -137,6 +139,7 @@ export class WeatherComponent implements OnInit {
     )
   }
 
+  // Obtenemos el clima actual
   getCurrentWeather(): void {
     this.loadingData = true;
     this.weatherService.currentWeather(this.weatherService.city).subscribe(
@@ -157,6 +160,7 @@ export class WeatherComponent implements OnInit {
     );
   }
 
+  // Obtenemos el pronostico actual por cordenadas
   forecastByCord(): void {
     this.weatherService.forecastByCord(this.latitude, this.longitude).subscribe(
       (data: any) => {
@@ -271,6 +275,7 @@ export class WeatherComponent implements OnInit {
     this.showCitiesList = false;
   }
 
+  // Obtenemos el pronostico de la ciudad actual
   getForecast(city: string): void {
     this.weatherService.forecast(city).subscribe(
       (data: any) => {
@@ -337,6 +342,7 @@ export class WeatherComponent implements OnInit {
     );
   }
   
+  // Obtener imagen segun la descripcion del clima
   getImageDescription(description: string): string {
     switch (description) {
       case 'clear sky':
@@ -368,6 +374,7 @@ export class WeatherComponent implements OnInit {
     }
   }
 
+  // Funcion que parsea de Unix a Horas
   parseUnixTimeToHour(unixTime: number): string {
     const date = new Date(unixTime * 1000);
     const hours = date.getHours();
@@ -400,12 +407,14 @@ export class WeatherComponent implements OnInit {
     const roundedSpeed = windSpeedKph.toFixed(1); // Redondear a un decimal
     return roundedSpeed;
   }
-  
+
+  // Convertir de a kilometros
   convertMetersToKilometers(meters: number): number {
     const kilometers = meters / 1000;
     return Math.round(kilometers * 10) / 10;
   }
 
+  // Funcion que obtiene lo que se escriba en el input de busqueda
   observerChangeSearch() {
     this.control.valueChanges
       .pipe(debounceTime(500))
@@ -433,5 +442,6 @@ export class WeatherComponent implements OnInit {
       }
     });
   }
+
 }
 
