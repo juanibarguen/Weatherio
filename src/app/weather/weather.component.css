@@ -205,6 +205,13 @@
     width: 25px;
     margin-left: 10px;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mode span {
+    font-size: 20px;
 }
 
 .lm {
@@ -242,6 +249,10 @@
     font-size: 12px;
 }
 
+.mode {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .temp-select button {
     width: 25px;
     height: 25px;
@@ -250,7 +261,7 @@
     background: #ffffff;
     cursor: pointer;
     margin-left: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .temp-select .celcius, .temp-select .farenheit {
