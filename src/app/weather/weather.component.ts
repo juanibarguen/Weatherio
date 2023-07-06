@@ -182,6 +182,8 @@ export class WeatherComponent implements OnInit {
         for (let i = 0; i < 7; i++) {
           const dateTemp = this.forecastData.list[i].main.temp;
           const dateTime = this.forecastData.list[i].dt_txt;
+          const dateTempMax = this.forecastData.list[i].main.temp_max;
+          const dateTempMin = this.forecastData.list[i].main.temp_min;
           const dateDescrip = this.forecastData.list[i].weather[0].description;
           const time = dateTime.split(" ")[1];
           const hourAndMinute = time.substring(0, 5);
@@ -227,8 +229,11 @@ export class WeatherComponent implements OnInit {
             time: hourAndMinute,
             main: dateDescrip,
             temp: dateTemp,
+            tempMax: dateTempMax,
+            tempMin: dateTempMin,
             imgDescription: imgDescription
           };
+          
   
           this.forecastTimes.push(forecastItem);
         }
@@ -295,6 +300,8 @@ export class WeatherComponent implements OnInit {
         this.forecastDays = []; // Reiniciar el arreglo de pronósticos
   
         for (let i = 0; i < 7; i++) {
+          const dateTempMax = this.forecastData.list[i].main.temp_max;
+          const dateTempMin = this.forecastData.list[i].main.temp_min;
           const dateTemp = this.forecastData.list[i].main.temp;
           const dateTime = this.forecastData.list[i].dt_txt;
           const dateDescrip = this.forecastData.list[i].weather[0].description;
@@ -310,6 +317,8 @@ export class WeatherComponent implements OnInit {
             time: hourAndMinute,
             main: dateDescrip,
             temp: dateTemp,
+            tempMax: dateTempMax,
+            tempMin: dateTempMin,
             imgDescription: this.getImageDescription(dateDescrip)
           };
   
@@ -452,5 +461,7 @@ export class WeatherComponent implements OnInit {
     });
   }
 
+  
+  
+  
 }
-
