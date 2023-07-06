@@ -1,11 +1,11 @@
 <section class="container-home">   
     
-    <section class="home" [ngClass]="{ 'ng-hide': loadingData }" *ngIf="!loadingData" [ngClass]="{'home-dark-mode': darkMode}">
-        <div class="left" [ngClass]="{'left-dark-mode': darkMode}">
+    <section class="home" [ngClass]="{ 'ng-hide': loadingData }" *ngIf="!loadingData">
+        <div class="left" >
             <div class="input-search">
                 <div class="container-input">
                   <span class="material-symbols-outlined">search</span>
-                    <input [formControl]="control" type="text" placeholder="Search city.." autocomplete="off" [ngClass]="{'input-dark-mode': darkMode}">
+                    <input [formControl]="control" type="text" placeholder="Search city.." autocomplete="off">
                 </div>
                 <ul *ngIf="showCitiesList" class="container-list" >
                     <li class="item-result" *ngFor="let item of cities" (click)="updateWeatherData(item.name,item.lat,item.lon)">
@@ -59,9 +59,9 @@
                 </div>
             </div>
         </div>
-        <div class="right" [ngClass]="{'right-dark-mode': darkMode}">
+        <div class="right" >
 
-            <div class="right-navbar" [ngClass]="{'right-navbar-dark-mode': darkMode}">
+            <div class="right-navbar" >
 
                 <div class="data-select">
                     <button class="today" [ngClass]="{'active': activeTab === 'today'}" (click)="activeTab = 'today'">Today</button>
@@ -104,7 +104,7 @@
 
                 <div *ngIf="currentWeatherData" class="boxes">
 
-                    <div class="sunrise box" [ngClass]="{'-dark-mode': darkMode}">
+                    <div class="sunrise box">
                         <p>Sunrise</p>
                         <div class="data-box">
                             <img src="assets/icons/icons8-sunrise-80.png" alt="">
