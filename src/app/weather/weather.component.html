@@ -1,4 +1,4 @@
-<section class="container-home">   
+<section class="container-home" [class.dark-mode]="darkMode">   
     
     <section class="home" [ngClass]="{ 'ng-hide': loadingData }" *ngIf="!loadingData">
         <div class="left" >

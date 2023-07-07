@@ -67,12 +67,16 @@ export class WeatherComponent implements OnInit {
       
     }
 
-    changeMode() {
-      if (this.darkMode) {
-        this.darkMode = false;
-      }else {
-        this.darkMode = true;
-      }
+    // changeMode() {
+    //   if (this.darkMode) {
+    //     this.darkMode = false;
+    //   }else {
+    //     this.darkMode = true;
+    //   }
+    // }
+
+    toggleDarkMode() {
+      this.darkMode = !this.darkMode;
     }
 
   // Función para cambiar el estado de temperatura seleccionado
