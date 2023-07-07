@@ -77,6 +77,8 @@ export class WeatherComponent implements OnInit {
 
     toggleDarkMode() {
       this.darkMode = !this.darkMode;
+      console.log(this.darkMode);
+      
     }
 
   // Función para cambiar el estado de temperatura seleccionado
