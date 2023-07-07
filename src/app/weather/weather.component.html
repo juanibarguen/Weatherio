@@ -1,4 +1,4 @@
-<section class="container-home">   
+<section class="container-home" [class.dark-mode]="darkMode">   
     
     <section class="home" [ngClass]="{ 'ng-hide': loadingData }" *ngIf="!loadingData">
         <div class="left" >
@@ -82,8 +82,8 @@
                 <div class="card" *ngFor="let item of forecastTimes" >
                   <p>{{ item.time }}</p>
                   <img [src]="item.imgDescription">
-                  <p *ngIf="selectedTemperature === 'C'">{{ convertToCelsius(item.temp) }}°C</p>
-                  <p *ngIf="selectedTemperature === 'F'">{{ convertToFahrenheit(item.temp) }}°F</p>
+                  <p *ngIf="selectedTemperature === 'C' ">{{ convertToCelsius(item.temp) }}°C</p>
+                  <p *ngIf="selectedTemperature === 'F' ">{{ convertToFahrenheit(item.temp) }}°F</p>
                 </div>
               </div>
               
