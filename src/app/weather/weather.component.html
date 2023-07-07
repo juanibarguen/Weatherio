@@ -70,7 +70,7 @@
                 <div class="temp-select">
                   <button [ngClass]="{ 'celcius': selectedTemperature === 'C' }" (click)="toggleTemperature('C')">C</button>
                   <button [ngClass]="{ 'farenheit': selectedTemperature === 'F' }" (click)="toggleTemperature('F')">F</button>
-                    <div class="mode">
+                    <div class="mode" (click)="toggleDarkMode()">
                         <!-- <span *ngIf="lightMode" class="material-symbols-outlined lm icon-light_mode">light_mode</span> -->
                         <span class="material-symbols-outlined icon-dark_mode">dark_mode</span>
                     </div>

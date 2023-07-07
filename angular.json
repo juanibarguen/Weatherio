@@ -26,7 +26,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "dark-theme.css"
+              "src/dark-theme.css"
             ],
             "scripts": []
           },
