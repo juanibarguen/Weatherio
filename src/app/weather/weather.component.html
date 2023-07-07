@@ -79,7 +79,7 @@
             </div>
 
             <div class="container-card" *ngIf="activeTab === 'today'" >
-                <div class="card" *ngFor="let item of forecastTimes" >
+                <div class="card" *ngFor="let item of forecastTimes" [class.dark-mode]="darkMode" >
                   <p>{{ item.time }}</p>
                   <img [src]="item.imgDescription">
                   <p *ngIf="selectedTemperature === 'C' ">{{ convertToCelsius(item.temp) }}°C</p>
